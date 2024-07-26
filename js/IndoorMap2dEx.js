@@ -866,6 +866,7 @@ Controller2D = function(renderer){
 
     function mouseDown(event){
 
+        console.log(event);
         event.preventDefault();
         _this.startPoint[0] = event.clientX;
         _this.startPoint[1] = event.clientY;

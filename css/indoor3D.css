@@ -19,7 +19,7 @@
 }
 
 
-.floorsUI, .testButton
+.floorsUI
 {
     position: absolute;;
     list-style: none;
@@ -32,18 +32,18 @@
 }
 
 .testButton{
+    position: relative;
     margin-left: auto;
     margin-right: 2px;
     top: 100px;
     float:right;
-    width: 100%;
 }
 .testButton ul{
     float: right;
 
 }
 .floorsUI li, .testButton li{
-    max-width: 100px;
+    max-width: 30px;
     padding: 10px;
     background-color: #e8e8e8 ;
     border: 1px solid #bbbbbb;
