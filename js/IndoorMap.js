@@ -891,7 +891,7 @@ var IndoorMap = function (params) {
         if (_this.is3d && Detector.webgl) {
             _indoorMap = new IndoorMap3d(_mapDiv);
         } else {
-            _indoorMap = new IndoorMap2d(_mapDiv);
+            _indoorMap = new IndoorMap2dEx(_mapDiv);
             _this.is3d = false;
         }
 
