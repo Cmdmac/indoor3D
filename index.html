@@ -33,6 +33,19 @@
         document.body.appendChild(ul);
     });
 
+
+    window.addEventListener('resize', function() {
+        var div = document.getElementById('indoor3d');
+        div.style.width = window.innerWidth - 1 + 'px';
+        div.style.height = window.innerHeight + 'px';
+    })
+
+    window.onload = function() {
+        var div = document.getElementById('indoor3d');
+        div.style.width = window.innerWidth - 1 + 'px';
+        div.style.height = window.innerHeight + 'px';
+    }
+
 </script>
 <!-- buttons just for test-->
 <div class="testButton">
