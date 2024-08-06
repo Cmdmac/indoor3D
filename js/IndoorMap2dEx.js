@@ -650,6 +650,11 @@ Canvas2DRenderer = function (map) {
                 if(pubPoint.visible) {
                     var image = _sprites[pubPoints[i].Type];
                     if (image !== undefined) {
+                        imgWidth = 20;//image.width;
+                        imgHeight = 20;//image.height;
+                        imgWidthHalf = imgWidth / 2;
+                        imgHeightHalf = imgHeight / 2;
+                        rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
                         _ctx.drawImage(image, (center[0] - imgWidthHalf) >> 0, (-center[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
                     }
                 }
@@ -755,7 +760,11 @@ Canvas2DRenderer = function (map) {
             for( var key in images){
                 var loader = new THREE.ImageLoader();
 
-                var image = loader.load( images[key], function(image){
+                var image = loader.load( images[key], function(img){
+                    if (_sprites[key]) {
+                        _sprites[key].width = img.width;
+                        _sprites[key].height = img.height;
+                    }
                     _this.render(mall);
                 })
 
