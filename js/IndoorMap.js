@@ -460,7 +460,8 @@ var default2dTheme = {
         "21001": System.imgPath+"/stair.png",
         "22006": System.imgPath+"/entry.png",
         "21002": System.imgPath+"/escalator.png",
-        "21003": System.imgPath+"/lift.png"
+        "21003": System.imgPath+"/lift.png",
+        "30000": System.imgPath+"/marker.png"
     }
 }
 var default3dTheme = {
@@ -609,7 +610,8 @@ var default3dTheme = {
         "21001": System.imgPath+"/stair.png",
         "22006": System.imgPath+"/entry.png",
         "21002": System.imgPath+"/escalator.png",
-        "21003": System.imgPath+"/lift.png"
+        "21003": System.imgPath+"/lift.png",
+        "30000": System.imgPath+"/marker.png"
     }
 }
 
