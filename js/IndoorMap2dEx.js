@@ -650,8 +650,9 @@ Canvas2DRenderer = function (map) {
                 if(pubPoint.visible) {
                     var image = _sprites[pubPoints[i].Type];
                     if (image !== undefined) {
-                        imgWidth = 20;//image.width;
-                        imgHeight = 20;//image.height;
+                        console.log("type=" + pubPoints[i].Type + "," + image.width + "," + image.height);
+                        imgWidth = image.width / 2;
+                        imgHeight = image.height / 2;
                         imgWidthHalf = imgWidth / 2;
                         imgHeightHalf = imgHeight / 2;
                         rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
@@ -755,20 +756,21 @@ Canvas2DRenderer = function (map) {
     }
 
     this.loadSpirtes = function(mall){
-        if(mall != null && _sprites.length == 0 ){
-            var images = _map.theme().pubPointImg;
-            for( var key in images){
-                var loader = new THREE.ImageLoader();
-
-                var image = loader.load( images[key], function(img){
-                    if (_sprites[key]) {
-                        _sprites[key].width = img.width;
-                        _sprites[key].height = img.height;
-                    }
-                    _this.render(mall);
-                })
-
-                _sprites[key] = image;
+        if(mall != null && _sprites.length === 0 ){
+            let images = _map.theme().pubPointImg;
+            for(let key in images){
+                if (_sprites[key] === undefined) {
+                    let loader = new THREE.ImageLoader();
+                    let image = loader.load(images[key], function(img){
+                        _sprites[key] = img;
+                            // console.log(img)
+                            // console.log("key=" + key + ",loadImages w=" + img.width + ",h" + img.height);
+                            _sprites[key].width = img.width;
+                            _sprites[key].height = img.height;
+                        _this.render(mall);
+                    })
+                    // _sprites[key] = image;
+                }
             }
         }
         _sprites.isLoaded = true;
@@ -875,7 +877,7 @@ Controller2D = function(renderer){
 
     function mouseDown(event){
 
-        console.log(event);
+        // console.log(event);
         event.preventDefault();
         _this.startPoint[0] = event.clientX;
         _this.startPoint[1] = event.clientY;
