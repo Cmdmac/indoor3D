@@ -920,6 +920,10 @@ var IndoorMap = function (params) {
         document.body.style.margin = "0";
     }
 
+    function setNaviPath(path) {
+        _indoorMap.setNaviPath(path);
+    }
+
 
     function updateUI() {
         if(_uiRoot == null){

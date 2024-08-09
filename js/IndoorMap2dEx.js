@@ -42,8 +42,6 @@ IndoorMap2dEx = function(mapdiv){
         _controls = new Controller2D(_this.renderer);
         _mapDiv.appendChild(canvasDiv);
         _mapDiv.style.overflow = "hidden";
-
-
     }
 
     this.reset = function(){
@@ -292,8 +290,11 @@ IndoorMap2dEx = function(mapdiv){
             _this.renderer.render(_this.mall);
             _controls.viewChanged = false;
         }
+    }
 
-
+    this.setNaviPath = function(path) {
+        _this.renderer._naviPath = path;
+        console.log("setNaviPath"+ path);
     }
 
     _this.init();
@@ -359,6 +360,8 @@ Canvas2DRenderer = function (map) {
     this.mapCenter = [];
     var _devicePixelRatio = 1;
 
+    let _naviPath = [];
+
     function _init(){
         _canvas.style.position = "absolute";
         _ctx = _canvas.getContext('2d');
@@ -414,6 +417,10 @@ Canvas2DRenderer = function (map) {
         _scale *= scale;
         _curFloor = _map.mall.getCurFloor();
         updateOutline(_curFloor, _scale);
+
+        // update navi path
+        updateNaviPath(scale);
+
         var funcAreas = _curFloor.FuncAreas;
         for(var i = 0; i < funcAreas.length; i++){
             updateOutline(funcAreas[i], _scale);
@@ -429,6 +436,17 @@ Canvas2DRenderer = function (map) {
         _this.clearBg();
         _this.render();
     }
+
+    function updateNaviPath(scale) {
+        let newNaviPath = [];
+        // console.log(_naviPath);
+        for(let i = 0; i < _naviPath.length; i++){
+            let newPath = updatePoint([_naviPath[i][0], _naviPath[i][1]], scale);
+            newNaviPath.push(newPath);
+        }
+        _naviPath = newNaviPath;
+    }
+
     function updateOutline(obj, scale){
         var outline = obj.Outline[0][0];
         obj.newOutline = [];
@@ -548,14 +566,12 @@ Canvas2DRenderer = function (map) {
 
         }
 
-
-
         _ctx.fillStyle = _curFloor.fillColor;
         _ctx.fill();
         _ctx.strokeStyle = theme.strokeStyle.color;
         _ctx.lineWidth = theme.strokeStyle.linewidth;
         _ctx.stroke();
-                    _ctx.closePath();
+        _ctx.closePath();
 
         //draw funcAreas
         var funcAreas = _curFloor.FuncAreas;
@@ -584,6 +600,22 @@ Canvas2DRenderer = function (map) {
         //_ctx.arc(_pubPoints[0],_pubPoints[1],5,0,Math.PI*2,true);
         //_ctx.closePath();
         //_ctx.fill();
+
+        // draw naviPath
+        if (_naviPath.length > 2) {
+            _ctx.beginPath();
+
+            let i = 0;
+            for (let i = 0; i < _naviPath.length; i++) {
+
+                _ctx.moveTo(_naviPath[i][0], -_naviPath[i][1]);
+                _ctx.lineTo(_naviPath[i + 1][0],-_naviPath[i+1][1]);
+
+            }
+
+            _ctx.closePath();
+            _ctx.stroke();
+        }
 
         _ctx.restore();
 
@@ -650,12 +682,12 @@ Canvas2DRenderer = function (map) {
                 if(pubPoint.visible) {
                     var image = _sprites[pubPoints[i].Type];
                     if (image !== undefined) {
-                        console.log("type=" + pubPoints[i].Type + "," + image.width + "," + image.height);
+                        // console.log("type=" + pubPoints[i].Type + "," + image.width + "," + image.height);
                         imgWidth = image.width / 2;
                         imgHeight = image.height / 2;
                         imgWidthHalf = imgWidth / 2;
                         imgHeightHalf = imgHeight / 2;
-                        rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
+                        // rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
                         _ctx.drawImage(image, (center[0] - imgWidthHalf) >> 0, (-center[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
                     }
                 }
@@ -753,6 +785,10 @@ Canvas2DRenderer = function (map) {
 
         _ctx.restore();
         return null;
+    }
+
+    function setNaviPath(path) {
+        this._naviPath = path;
     }
 
     this.loadSpirtes = function(mall){

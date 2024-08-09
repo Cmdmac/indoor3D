@@ -13,6 +13,6 @@ app.get('/', (req, res) => {
 });
 
 // 启动服务器，监听 3000 端口
-app.listen(3000, () => {
-  console.log('服务器运行在 http://localhost:3000');
+app.listen(4000, () => {
+  console.log('服务器运行在 http://localhost:4000');
 });

@@ -32,6 +32,15 @@
         map.showAreaNames(true).setSelectable(true);
         var ul = IndoorMap.getUI(map);
         document.body.appendChild(ul);
+
+        // console.log(map);
+        fetch('http://localhost:3000/search?startX=30&startY=80&endX=200&endY=300')
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                map.setNaviPath(JSON.parse(data).data)
+            })
+            .catch(error => console.error('Error:', error));
     });
 </script>
 <!-- buttons just for test-->
