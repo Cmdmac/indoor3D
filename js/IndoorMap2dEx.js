@@ -30,6 +30,8 @@ IndoorMap2dEx = function(mapdiv){
 
     //var _marker;
 
+    let _naviPath = [];
+
     this.init = function(){
         _this.containerSize[0] = parseInt(_mapDiv.style.width);
         _this.containerSize[1] = parseInt(_mapDiv.style.height);
@@ -293,8 +295,8 @@ IndoorMap2dEx = function(mapdiv){
     }
 
     this.setNaviPath = function(path) {
-        _this.renderer._naviPath = path;
-        console.log("setNaviPath"+ path);
+        _this._naviPath = path;
+        // console.log("setNaviPath"+ _naviPath);
     }
 
     _this.init();
@@ -360,7 +362,7 @@ Canvas2DRenderer = function (map) {
     this.mapCenter = [];
     var _devicePixelRatio = 1;
 
-    let _naviPath = [];
+    // let _naviPath = [];
 
     function _init(){
         _canvas.style.position = "absolute";
@@ -419,7 +421,7 @@ Canvas2DRenderer = function (map) {
         updateOutline(_curFloor, _scale);
 
         // update navi path
-        updateNaviPath(scale);
+        updateNaviPath(_scale);
 
         var funcAreas = _curFloor.FuncAreas;
         for(var i = 0; i < funcAreas.length; i++){
@@ -438,13 +440,18 @@ Canvas2DRenderer = function (map) {
     }
 
     function updateNaviPath(scale) {
-        let newNaviPath = [];
-        // console.log(_naviPath);
-        for(let i = 0; i < _naviPath.length; i++){
-            let newPath = updatePoint([_naviPath[i][0], _naviPath[i][1]], scale);
-            newNaviPath.push(newPath);
+        if (_map._naviPath == undefined) {
+            return;
         }
-        _naviPath = newNaviPath;
+        _map.newNaviPath = [];
+        // console.log(_naviPath);
+        // console.log(_map._naviPath)
+
+        for(let i = 0; i < _map._naviPath.length; i++){
+            let newPath = updatePoint([_map._naviPath[i][0], _map._naviPath[i][1]], scale);
+            _map.newNaviPath.push(newPath);
+        }
+        // console.log(_map.newNaviPath)
     }
 
     function updateOutline(obj, scale){
@@ -602,14 +609,15 @@ Canvas2DRenderer = function (map) {
         //_ctx.fill();
 
         // draw naviPath
-        if (_naviPath.length > 2) {
+        const np =_map.newNaviPath;
+        if (np && np.length > 2) {
             _ctx.beginPath();
 
             let i = 0;
-            for (let i = 0; i < _naviPath.length; i++) {
+            for (let i = 0; i + 1< np.length; i++) {
 
-                _ctx.moveTo(_naviPath[i][0], -_naviPath[i][1]);
-                _ctx.lineTo(_naviPath[i + 1][0],-_naviPath[i+1][1]);
+                _ctx.moveTo(np[i][0], -np[i][1]);
+                _ctx.lineTo(np[i + 1][0],-np[i+1][1]);
 
             }
 
@@ -787,9 +795,9 @@ Canvas2DRenderer = function (map) {
         return null;
     }
 
-    function setNaviPath(path) {
-        this._naviPath = path;
-    }
+    // function setNaviPath(path) {
+    //     this._naviPath = path;
+    // }
 
     this.loadSpirtes = function(mall){
         if(mall != null && _sprites.length === 0 ){
