@@ -12,7 +12,7 @@
 <script src="js/IndoorMap.js"></script>
 <script src="js/Projector.js"></script>
 <script src="js/stats.min.js"></script>
-<!--<script src="js/IndoorMap2d.js"></script>-->
+<!-- <script src="js/IndoorMap2d.js"></script> -->
 <script src="js/IndoorMap2dEx.js"></script>
 <script src="js/IndoorMap3d.js"></script>
 <script src="js/Theme.js"></script>
@@ -34,11 +34,11 @@
         document.body.appendChild(ul);
 
         // console.log(map);
-        fetch('http://localhost:3000/search?startX=30&startY=80&endX=30&endY=300')
+        fetch('http://localhost:3000/search?startX=150&startY=100&endX=300&endY=500')
             .then(response => response.text())
             .then(data => {
                 console.log(data);
-                console.log(map);
+                // console.log(map);
                 map.setNaviPath(JSON.parse(data).data)
             })
             .catch(error => console.error('Error:', error));

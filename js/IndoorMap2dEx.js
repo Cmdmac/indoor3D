@@ -296,6 +296,7 @@ IndoorMap2dEx = function(mapdiv){
 
     this.setNaviPath = function(path) {
         _this._naviPath = path;
+        _this.renderer.refreshNaviPath();
         // console.log("setNaviPath"+ _naviPath);
     }
 
@@ -436,6 +437,11 @@ Canvas2DRenderer = function (map) {
         _translate[1] *= scale;
         _ctx.translate(_translate[0], _translate[1]);
         _this.clearBg();
+        _this.render();
+    }
+
+    this.refreshNaviPath = function() {
+        updateNaviPath(_scale);
         _this.render();
     }
 
