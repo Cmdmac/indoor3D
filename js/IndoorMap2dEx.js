@@ -475,7 +475,9 @@ Canvas2DRenderer = function (map) {
     }
 
     function updatePoint(point, scale){
-        return [((point[0] - _this.mapCenter[0])*scale)>>0, ((point[1] - _this.mapCenter[1])*scale)>>0];
+        // return [point[0], point[1]]
+        return [((point[0] - _this.mapCenter[0])*scale)>>0, ((_map.containerSize[1] - point[1])*scale - _this.mapCenter[1])>>0];
+        // return [((point[0] - _this.mapCenter[0])*scale)>>0, ((point[1] - _this.mapCenter[1])*scale)>>0];
     }
 
     this.setDefaultView = function (floor) {
