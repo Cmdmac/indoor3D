@@ -461,7 +461,8 @@ var default2dTheme = {
         "22006": System.imgPath+"/entry.png",
         "21002": System.imgPath+"/escalator.png",
         "21003": System.imgPath+"/lift.png",
-        "30000": System.imgPath+"/marker.png"
+        "30000": System.imgPath+"/marker.png",
+        "30001": System.imgPath+'/marker.png'
     }
 }
 var default3dTheme = {

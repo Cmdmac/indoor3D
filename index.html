@@ -34,14 +34,14 @@
         document.body.appendChild(ul);
 
         // console.log(map);
-        fetch('http://localhost:3000/search?startX=150&startY=100&endX=300&endY=500')
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                // console.log(map);
-                map.setNaviPath(JSON.parse(data).data)
-            })
-            .catch(error => console.error('Error:', error));
+        // fetch('http://localhost:3000/search?startX=150&startY=100&endX=300&endY=500')
+        //     .then(response => response.text())
+        //     .then(data => {
+        //         console.log(data);
+        //         // console.log(map);
+        //         map.setNaviPath(JSON.parse(data).data)
+        //     })
+        //     .catch(error => console.error('Error:', error));
     });
 </script>
 <!-- buttons just for test-->

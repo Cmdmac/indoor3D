@@ -44,6 +44,9 @@ IndoorMap2dEx = function(mapdiv){
         _controls = new Controller2D(_this.renderer);
         _mapDiv.appendChild(canvasDiv);
         _mapDiv.style.overflow = "hidden";
+
+        // _this._location = [10, 10];
+        // _this.updateCurrentLocation(_this._location);
     }
 
     this.reset = function(){
@@ -300,6 +303,11 @@ IndoorMap2dEx = function(mapdiv){
         // console.log("setNaviPath"+ _naviPath);
     }
 
+    this.updateCurrentLocation = function (location) {
+        _this._location = location;
+        _this.renderer.updateLocation();
+    }
+
     _this.init();
     animate();
 }
@@ -445,8 +453,14 @@ Canvas2DRenderer = function (map) {
         _this.render();
     }
 
+    this.updateLocation = function () {
+        _map.newLocation = {};
+        _map.newLocation = updatePoint(_map._location[0], _map._location[1], _scale);
+        _this.render();
+    }
+
     function updateNaviPath(scale) {
-        if (_map._naviPath == undefined) {
+        if (_map._naviPath === undefined) {
             return;
         }
         _map.newNaviPath = [];
@@ -482,7 +496,7 @@ Canvas2DRenderer = function (map) {
 
     function updatePoint(point, scale){
         // return [point[0], point[1]]
-        return [((point[0] - _this.mapCenter[0])*scale)>>0, ((_map.containerSize[1] - point[1])*scale - _this.mapCenter[1])>>0];
+        return [((point[0] - _this.mapCenter[0])*scale)>>0, ((_this.mapCenter[1]*2 - point[1]- _this.mapCenter[1])*scale)  >>0];
         // return [((point[0] - _this.mapCenter[0])*scale)>>0, ((point[1] - _this.mapCenter[1])*scale)>>0];
     }
 
@@ -615,6 +629,20 @@ Canvas2DRenderer = function (map) {
         //_ctx.arc(_pubPoints[0],_pubPoints[1],5,0,Math.PI*2,true);
         //_ctx.closePath();
         //_ctx.fill();
+
+        //draw location
+        if (_map.newLocation) {
+            var image = _sprites[30001];
+            if (image !== undefined) {
+                // console.log("type=" + pubPoints[i].Type + "," + image.width + "," + image.height);
+                const imgWidth = image.width / 2;
+                const imgHeight = image.height / 2;
+                const imgWidthHalf = imgWidth / 2;
+                const imgHeightHalf = imgHeight / 2;
+                // rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
+                _ctx.drawImage(image, (_map.newLocation[0] - imgWidthHalf) >> 0, (-_map.newLocation[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
+            }
+        }
 
         // draw naviPath
         const np =_map.newNaviPath;
