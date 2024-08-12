@@ -288,6 +288,10 @@ IndoorMap2dEx = function(mapdiv){
         _this.renderer.render(_this.mall);
     }
 
+    this.refresh = function () {
+        redraw();
+    }
+
     function animate () {
         requestAnimationFrame(animate);
         //_controls.update();
