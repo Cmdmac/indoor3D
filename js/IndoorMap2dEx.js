@@ -45,7 +45,7 @@ IndoorMap2dEx = function(mapdiv){
         _mapDiv.appendChild(canvasDiv);
         _mapDiv.style.overflow = "hidden";
 
-        // _this._location = [10, 10];
+        // _this._location = [-20, 200];
         // _this.updateCurrentLocation(_this._location);
     }
 
@@ -454,8 +454,8 @@ Canvas2DRenderer = function (map) {
     }
 
     this.updateLocation = function () {
-        _map.newLocation = {};
-        _map.newLocation = updatePoint(_map._location[0], _map._location[1], _scale);
+        _map.newLocation = [];
+        _map.newLocation = updatePoint(_map._location, _scale);
         _this.render();
     }
 
