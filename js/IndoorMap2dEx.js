@@ -307,8 +307,9 @@ IndoorMap2dEx = function(mapdiv){
         // console.log("setNaviPath"+ _naviPath);
     }
 
-    this.updateCurrentLocation = function (location) {
+    this.updateCurrentLocation = function (location, direction) {
         _this._location = location;
+        _this._direction = direction;
         _this.renderer.updateLocation();
     }
 
@@ -644,7 +645,16 @@ Canvas2DRenderer = function (map) {
                 const imgWidthHalf = imgWidth / 2;
                 const imgHeightHalf = imgHeight / 2;
                 // rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
+                let direction = 0;
+                if (_map._direction) {
+                    direction = _map._direction;
+                }
+                // const angleInRadians = Math.PI / 4; // 45 度，转换为弧度
+                const cosValue = Math.cos(direction);
+                const sinValue = Math.sin(direction);
+                _ctx.setTransform(cosValue, sinValue, -sinValue, cosValue, (_map.newLocation[0] - imgWidthHalf) >> 0, (-_map.newLocation[1] - imgHeightHalf) >> 0);
                 _ctx.drawImage(image, (_map.newLocation[0] - imgWidthHalf) >> 0, (-_map.newLocation[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
+                _ctx.resetTransform(); 
             }
         }
 
