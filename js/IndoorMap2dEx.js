@@ -434,6 +434,9 @@ Canvas2DRenderer = function (map) {
         _curFloor = _map.mall.getCurFloor();
         updateOutline(_curFloor, _scale);
 
+        // update location
+        updateLocationInner();
+
         // update navi path
         updateNaviPath(_scale);
 
@@ -462,6 +465,14 @@ Canvas2DRenderer = function (map) {
         _map.newLocation = [];
         _map.newLocation = updatePoint(_map._location, _scale);
         _this.render();
+    }
+
+    function updateLocationInner() {
+        if (_map._location) {
+            _map.newLocation = [];
+            _map.newLocation = updatePoint(_map._location, _scale);
+            _this.render();
+        }        
     }
 
     function updateNaviPath(scale) {
@@ -628,6 +639,7 @@ Canvas2DRenderer = function (map) {
             _ctx.stroke();
         }
 
+        _ctx.restore();
         ////test for selection
         //_ctx.fillStyle="#FF0000";
         //_ctx.beginPath();
@@ -635,6 +647,7 @@ Canvas2DRenderer = function (map) {
         //_ctx.closePath();
         //_ctx.fill();
 
+        _ctx.save();
         //draw location
         if (_map.newLocation) {
             var image = _sprites[30001];
@@ -649,15 +662,29 @@ Canvas2DRenderer = function (map) {
                 if (_map._direction) {
                     direction = _map._direction;
                 }
-                // const angleInRadians = Math.PI / 4; // 45 度，转换为弧度
-                const cosValue = Math.cos(direction);
-                const sinValue = Math.sin(direction);
-                _ctx.setTransform(cosValue, sinValue, -sinValue, cosValue, (_map.newLocation[0] - imgWidthHalf) >> 0, (-_map.newLocation[1] - imgHeightHalf) >> 0);
-                _ctx.drawImage(image, (_map.newLocation[0] - imgWidthHalf) >> 0, (-_map.newLocation[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
-                _ctx.resetTransform(); 
+                // _ctx.save();
+                let centerX = (_map.newLocation[0] - imgWidthHalf) >> 0;
+                let centerY = (-_map.newLocation[1] - imgHeightHalf) >> 0;
+
+                // console.log(centerX + "," + centerY);
+                _ctx.translate(_map.newLocation[0], -_map.newLocation[1]);
+                // test coordinate
+                // _ctx.beginPath();
+                // _ctx.arc(0, 0, 50, 0, 2 * Math.PI);
+                // _ctx.strokeStyle = 'blue';
+                // _ctx.lineWidth = 3;
+                // _ctx.stroke();
+                
+                _ctx.rotate(direction * Math.PI / 180); 
+
+                _ctx.drawImage(image, -  imgWidthHalf, - imgWidthHalf, imgWidth, imgHeight);
+                
             }
         }
 
+        _ctx.restore();
+
+        _ctx.save();
         // draw naviPath
         const np =_map.newNaviPath;
         if (np && np.length > 2) {
