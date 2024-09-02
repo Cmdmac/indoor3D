@@ -435,7 +435,7 @@ Canvas2DRenderer = function (map) {
         updateOutline(_curFloor, _scale);
 
         // update location
-        updateLocationInner();
+        _this.updateLocation();
 
         // update navi path
         updateNaviPath(_scale);
@@ -462,18 +462,12 @@ Canvas2DRenderer = function (map) {
     }
 
     this.updateLocation = function () {
-        _map.newLocation = [];
-        _map.newLocation = updatePoint(_map._location, _scale);
-        _this.render();
-    }
-
-    function updateLocationInner() {
-        if (_map._location) {
+        if (map._location) {
             _map.newLocation = [];
             _map.newLocation = updatePoint(_map._location, _scale);
             _this.render();
         }        
-    }
+    }    
 
     function updateNaviPath(scale) {
         if (_map._naviPath === undefined) {
