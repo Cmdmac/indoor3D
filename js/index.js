@@ -1,10 +1,12 @@
+
 function onBodyLoad() {
-        var params = {
-            mapDiv:"mapDiv",
-            dim:"2d",
-            // size: [window.innerWidth,window.innerHeight-200]
-        }
-        var map = IndoorMap(params);
+    var params = {
+        mapDiv:"mapDiv",
+        dim:"2d",
+    // size: [window.innerWidth,window.innerHeight-200]
+    }
+        
+    var map = IndoorMap(params);
         map.load('data/indoorMap.json', function(){
             //map.setTheme(testTheme);
             map.showAreaNames(true).setSelectable(true);
@@ -28,31 +30,33 @@ function onBodyLoad() {
 
             map.updateCurrentLocation([100, 100], 80);
         });
-
-        function increaseFrameSize() {
-            console.log('increaseFrameSize');
-            window.socket.send(JSON.stringify({command: 0}));
-        }
-
-        function decreaseFrameSize() {
-            console.log('decreaseFrameSize');
-            window.socket.send(JSON.stringify({command: 1}));
-        }
-
         // init tabs
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.content');
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
 
-        tabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-            // 移除所有 tab 和内容的激活状态
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+        // 移除所有 tab 和内容的激活状态
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
 
-            // 设置点击的 tab 和对应的内容为激活状态
-            const targetTab = tab.dataset.tab;
-            document.getElementById(targetTab).classList.add('active');
-            tab.classList.add('active');
-          });
+        // 设置点击的 tab 和对应的内容为激活状态
+        const targetTab = tab.dataset.tab;
+        document.getElementById(targetTab).classList.add('active');
+        tab.classList.add('active');
         });
-    }
+    });
+}
+
+
+
+function increaseFrameSize() {
+    console.log('increaseFrameSize');
+    window.socket.send(JSON.stringify({command: 0}));
+}
+
+function decreaseFrameSize() {
+    console.log('decreaseFrameSize');
+    window.socket.send(JSON.stringify({command: 1}));
+}
+
