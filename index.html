@@ -4,61 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no">
     <title></title>
+    <script src="js/three.min.js"></script>
+    <!-- <script src="js/Detector.js"></script> -->
+    <!-- <script src="js/OrbitControls.js"></script> -->
+    <script src="js/IndoorMap.js"></script>
+    <!-- <script src="js/Projector.js"></script> -->
+    <script src="js/stats.min.js"></script>
+    <!-- <script src="js/IndoorMap2d.js"></script> -->
+    <script src="js/IndoorMap2dEx.js"></script>
+    <!-- <script src="js/IndoorMap3d.js"></script> -->
+    <script src="js/Theme.js"></script>
+    <link href="css/indoor3D.css" rel="stylesheet">
 </head>
-<body>
-<script src="js/three.min.js"></script>
-<script src="js/Detector.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/IndoorMap.js"></script>
-<script src="js/Projector.js"></script>
-<script src="js/stats.min.js"></script>
-<!-- <script src="js/IndoorMap2d.js"></script> -->
-<script src="js/IndoorMap2dEx.js"></script>
-<script src="js/IndoorMap3d.js"></script>
-<script src="js/Theme.js"></script>
-<link href="css/indoor3D.css" rel="stylesheet">
-
-<!--<div id="indoor3d" style="width: 1500px; height: 900px; top:0px; left: 0px; position: absolute"></div>-->
 <script>
+    function onBodyLoad() {
+        var params = {
+            // mapDiv:"indoor3d",
+            dim:"2d",
+            size: [window.innerWidth,window.innerHeight]
+        }
+        var map = IndoorMap(params);
+        map.load('data/indoorMap.json', function(){
+            //map.setTheme(testTheme);
+            map.showAreaNames(true).setSelectable(true);
+            var ul = IndoorMap.getUI(map);
+            document.body.appendChild(ul);
 
-    var params = {
-        // mapDiv:"indoor3d",
-        dim:"2d",
-        size: [window.innerWidth,window.innerHeight]
-    }
-    var map = IndoorMap(params);
-    map.load('data/indoorMap.json', function(){
-        //map.setTheme(testTheme);
-        map.showAreaNames(true).setSelectable(true);
-        var ul = IndoorMap.getUI(map);
-        document.body.appendChild(ul);
+            const socket = new WebSocket('ws://localhost:3000/web');                
+            socket.addEventListener('open', (event) => {
+              console.log('连接已打开');
+            });
 
-        const socket = new WebSocket('ws://localhost:3000/web');                
-        socket.addEventListener('open', (event) => {
-          console.log('连接已打开');
+            socket.addEventListener('message', (event) => {
+                console.log(`收到消息: ${event.data}`);
+                const location = JSON.parse(event.data).data;            
+                map.updateCurrentLocation(location, 50);
+                map.refresh();
+            });
+            window.socket = socket;
+
+            map.updateCurrentLocation([100, 100], 80);
         });
 
-        socket.addEventListener('message', (event) => {
-            console.log(`收到消息: ${event.data}`);
-            const location = JSON.parse(event.data).data;            
-            map.updateCurrentLocation(location, 50);
-            map.refresh();
-        });
-        window.socket = socket;
+        function increaseFrameSize() {
+            console.log('increaseFrameSize');
+            window.socket.send(JSON.stringify({command: 0}));
+        }
 
-        map.updateCurrentLocation([100, 100], 80);
-    });
-
-    function increaseFrameSize() {
-        console.log('increaseFrameSize');
-        window.socket.send(JSON.stringify({command: 0}));
-    }
-
-    function decreaseFrameSize() {
-        console.log('decreaseFrameSize');
-        window.socket.send(JSON.stringify({command: 1}));
+        function decreaseFrameSize() {
+            console.log('decreaseFrameSize');
+            window.socket.send(JSON.stringify({command: 1}));
+        }
     }
 </script>
+<body onload="onBodyLoad()">
+<!--<div id="indoor3d" style="width: 1500px; height: 900px; top:0px; left: 0px; position: absolute"></div>-->
+    
 <!-- buttons just for test-->
 <div class="testButton">
 <ul >
