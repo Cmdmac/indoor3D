@@ -37,11 +37,12 @@
     margin-right: 2px;
     top: 100px;
     float:right;
+    z-index: 10;
 }
 .testButton ul{
     float: right;
-
 }
+
 .floorsUI li, .testButton li{
     max-width: 30px;
     padding: 10px;
