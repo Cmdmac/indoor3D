@@ -33,8 +33,10 @@ IndoorMap2dEx = function(mapdiv){
     let _naviPath = [];
 
     this.init = function(){
-        _this.containerSize[0] = parseInt(_mapDiv.style.width);
-        _this.containerSize[1] = parseInt(_mapDiv.style.height);
+        // _this.containerSize[0] = parseInt(_mapDiv.style.width);
+        // _this.containerSize[1] = parseInt(_mapDiv.style.height);
+        _this.containerSize[0] = parseInt(_mapDiv.clientWidth);
+        _this.containerSize[1] = parseInt(_mapDiv.clientHeight - 100);
         _this.containerHalfSize[0] = _this.containerSize[0] / 2;
         _this.containerHalfSize[1] = _this.containerSize[1] / 2;
         _this.containerPos = IDM.DomUtil.getPos(_mapDiv);

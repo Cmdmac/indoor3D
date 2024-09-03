@@ -917,8 +917,9 @@ var IndoorMap = function (params) {
         _mapDiv.style.left = "0px";
         _mapDiv.style.position = "absolute";
         _mapDiv.id = "indoor3d";
-        document.body.appendChild(_mapDiv);
-        document.body.style.margin = "0";
+        document.getElementById("tab1").appendChild(_mapDiv);
+        // document.body.appendChild(_mapDiv);
+        // document.body.style.margin = "0";
     }
 
     function setNaviPath(path) {

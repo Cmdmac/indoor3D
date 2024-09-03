@@ -19,16 +19,18 @@
 <script>
     function onBodyLoad() {
         var params = {
-            // mapDiv:"indoor3d",
+            mapDiv:"mapDiv",
             dim:"2d",
-            size: [window.innerWidth,window.innerHeight]
+            // size: [window.innerWidth,window.innerHeight-200]
         }
         var map = IndoorMap(params);
         map.load('data/indoorMap.json', function(){
             //map.setTheme(testTheme);
             map.showAreaNames(true).setSelectable(true);
+            let floorList = document.getElementById("floor");
             var ul = IndoorMap.getUI(map);
-            document.body.appendChild(ul);
+            // document.body.appendChild(ul);
+            floorList.appendChild(ul);
 
             const socket = new WebSocket('ws://localhost:3000/web');                
             socket.addEventListener('open', (event) => {
@@ -55,21 +57,50 @@
             console.log('decreaseFrameSize');
             window.socket.send(JSON.stringify({command: 1}));
         }
+
+        // init tabs
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // 移除所有 tab 和内容的激活状态
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            // 设置点击的 tab 和对应的内容为激活状态
+            const targetTab = tab.dataset.tab;
+            document.getElementById(targetTab).classList.add('active');
+            tab.classList.add('active');
+          });
+        });
     }
 </script>
 <body onload="onBodyLoad()">
-<!--<div id="indoor3d" style="width: 1500px; height: 900px; top:0px; left: 0px; position: absolute"></div>-->
-    
-<!-- buttons just for test-->
-<div class="testButton">
-<ul >
-    <li onclick="map.zoomIn(1.2)">+</li>
-    <li onclick="map.zoomOut(0.8)">-</li>
-    <!--<li onclick="map.setTopView()">Top View</li>-->
-    <li onclick="map.setDefaultView()">Reset</li>
-    <li onclick="increaseFrameSize()">increaseFrameSize</li>
-    <li onclick="decreaseFrameSize()">decreaseFrameSize</li>
-</ul>
+<div class="tab-container">
+  <div class="tabs">
+    <div class="tab active" data-tab="tab1">Tab 1</div>
+    <div class="tab" data-tab="tab2">Tab 2</div>
+    <div class="tab" data-tab="tab3">Tab 3</div>
+  </div>
+  <div class="tab-content">
+    <div id="tab1" class="content active">
+        <div id="mapDiv" class="map"></div>
+        <div id="floor"></div>
+        <div class="testButton">
+            <ul >
+                <li onclick="map.zoomIn(1.2)">+</li>
+                <li onclick="map.zoomOut(0.8)">-</li>
+                <li onclick="map.setDefaultView()">Reset</li>
+                <li onclick="increaseFrameSize()">+F</li>
+                <li onclick="decreaseFrameSize()">-F</li>
+            </ul>
+        </div>
+    </div>
+    <div id="tab2" class="content">Content of Tab 2</div>
+    <div id="tab3" class="content">Content of Tab 3</div>
+  </div>
 </div>
+
 </body>
 </html>
