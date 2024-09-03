@@ -65,6 +65,10 @@ html body {
 /*    height: 100vh;*/
     marign: 0px;
     height: 100vh;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .map {

@@ -1,4 +1,5 @@
 
+var map = undefined;
 function onBodyLoad() {
     var params = {
         mapDiv:"mapDiv",
@@ -6,30 +7,30 @@ function onBodyLoad() {
     // size: [window.innerWidth,window.innerHeight-200]
     }
         
-    var map = IndoorMap(params);
-        map.load('data/indoorMap.json', function(){
-            //map.setTheme(testTheme);
-            map.showAreaNames(true).setSelectable(true);
-            let floorList = document.getElementById("floor");
-            var ul = IndoorMap.getUI(map);
-            // document.body.appendChild(ul);
-            floorList.appendChild(ul);
+    map = IndoorMap(params);
+    map.load('data/indoorMap.json', function(){
+        //map.setTheme(testTheme);
+        map.showAreaNames(true).setSelectable(true);
+        let floorList = document.getElementById("floor");
+        var ul = IndoorMap.getUI(map);
+        // document.body.appendChild(ul);
+        floorList.appendChild(ul);
 
-            const socket = new WebSocket('ws://localhost:3000/web');                
-            socket.addEventListener('open', (event) => {
-              console.log('连接已打开');
-            });
-
-            socket.addEventListener('message', (event) => {
-                console.log(`收到消息: ${event.data}`);
-                const location = JSON.parse(event.data).data;            
-                map.updateCurrentLocation(location, 50);
-                map.refresh();
-            });
-            window.socket = socket;
-
-            map.updateCurrentLocation([100, 100], 80);
+        const socket = new WebSocket('ws://localhost:3000/web');                
+        socket.addEventListener('open', (event) => {
+          console.log('连接已打开');
         });
+
+        socket.addEventListener('message', (event) => {
+            console.log(`收到消息: ${event.data}`);
+            const location = JSON.parse(event.data).data;            
+            map.updateCurrentLocation(location, 50);
+            map.refresh();
+        });
+        window.socket = socket;
+
+        map.updateCurrentLocation([100, 100], 80);
+    });
         // init tabs
     const tabs = document.querySelectorAll('.tab');
     const contents = document.querySelectorAll('.content');
@@ -48,7 +49,17 @@ function onBodyLoad() {
     });
 }
 
+function zoomIn() {
+    map.zoomIn(1.2);
+}
 
+function zoomOut() {
+    map.zoomOut(0.8);
+}
+
+function setDefaultView() {
+    map.setDefaultView();
+}
 
 function increaseFrameSize() {
     console.log('increaseFrameSize');
