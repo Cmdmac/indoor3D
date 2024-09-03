@@ -14,73 +14,15 @@
     <script src="js/IndoorMap2dEx.js"></script>
     <!-- <script src="js/IndoorMap3d.js"></script> -->
     <script src="js/Theme.js"></script>
+    <script src="js/index.js"></script>
     <link href="css/indoor3D.css" rel="stylesheet">
 </head>
-<script>
-    function onBodyLoad() {
-        var params = {
-            mapDiv:"mapDiv",
-            dim:"2d",
-            // size: [window.innerWidth,window.innerHeight-200]
-        }
-        var map = IndoorMap(params);
-        map.load('data/indoorMap.json', function(){
-            //map.setTheme(testTheme);
-            map.showAreaNames(true).setSelectable(true);
-            let floorList = document.getElementById("floor");
-            var ul = IndoorMap.getUI(map);
-            // document.body.appendChild(ul);
-            floorList.appendChild(ul);
 
-            const socket = new WebSocket('ws://localhost:3000/web');                
-            socket.addEventListener('open', (event) => {
-              console.log('连接已打开');
-            });
-
-            socket.addEventListener('message', (event) => {
-                console.log(`收到消息: ${event.data}`);
-                const location = JSON.parse(event.data).data;            
-                map.updateCurrentLocation(location, 50);
-                map.refresh();
-            });
-            window.socket = socket;
-
-            map.updateCurrentLocation([100, 100], 80);
-        });
-
-        function increaseFrameSize() {
-            console.log('increaseFrameSize');
-            window.socket.send(JSON.stringify({command: 0}));
-        }
-
-        function decreaseFrameSize() {
-            console.log('decreaseFrameSize');
-            window.socket.send(JSON.stringify({command: 1}));
-        }
-
-        // init tabs
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.content');
-
-        tabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-            // 移除所有 tab 和内容的激活状态
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-
-            // 设置点击的 tab 和对应的内容为激活状态
-            const targetTab = tab.dataset.tab;
-            document.getElementById(targetTab).classList.add('active');
-            tab.classList.add('active');
-          });
-        });
-    }
-</script>
 <body onload="onBodyLoad()">
 <div class="tab-container">
   <div class="tabs">
-    <div class="tab active" data-tab="tab1">Tab 1</div>
-    <div class="tab" data-tab="tab2">Tab 2</div>
+    <div class="tab active" data-tab="tab1">Room Map</div>
+    <div class="tab" data-tab="tab2">Control</div>
     <div class="tab" data-tab="tab3">Tab 3</div>
   </div>
   <div class="tab-content">
@@ -97,7 +39,9 @@
             </ul>
         </div>
     </div>
-    <div id="tab2" class="content">Content of Tab 2</div>
+    <div id="tab2" class="content">
+
+    </div>
     <div id="tab3" class="content">Content of Tab 3</div>
   </div>
 </div>
