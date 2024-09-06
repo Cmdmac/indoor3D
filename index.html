@@ -41,14 +41,32 @@
     </div>
     <div id="tab2" class="content">
         <div class="stream-container">
-            <div class="stream" >
+            <div class="stream" onclick="onRequestStream()">
                 <img id="stream" style="display: none;" src="https://lanoonan.com/wp-content/uploads/2015/06/start-sutra-3.png" >
-                <img src="img/play.png" style="width: 30px; height: 30px; ">
+                <img id="play" src="img/play.png" style="width: 30px; height: 30px; ">
             </div>
             <div id="control-bar" class="control-bar">
-                <div id="voiceSwitch"><img src="img/voice-off.png" /></div>
-                <div id="capturePhoto"><img src="img/photo.png" /></div>
-                <div id="adjustPosition"><img src="img/directions.png" /></div>
+                <div onclick="onClickVoiceSwitch()"><img id="voiceSwitch" src="img/voice-off.png" /></div>
+                <div ><img id="capturePhoto" src="img/photo.png" /></div>
+                <div ><img id="adjustPosition" onclick="onClickAdjustPosition()" src="img/directions.png" /></div>
+            </div>
+            <div id="control-panel" class="control-panel" style="display:none;">
+
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/up.png"></div>
+                    <div></div>
+                </div>
+                <div class="control-panel-row">
+                    <div><img src="img/left.png"></div>
+                    <div></div>          
+                    <div><img src="img/right.png"></div>
+                </div>
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/down.png"></div>
+                    <div></div>
+                </div>
             </div>
         </div>
         

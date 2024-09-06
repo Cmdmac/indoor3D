@@ -47,6 +47,7 @@ function onBodyLoad() {
         tab.classList.add('active');
         });
     });
+
 }
 
 function zoomIn() {
@@ -71,3 +72,33 @@ function decreaseFrameSize() {
     window.socket.send(JSON.stringify({command: 1}));
 }
 
+function onRequestStream() {
+    if (document.getElementById('play').style.display == 'none') {
+        document.getElementById('play').style.display = 'block';
+        document.getElementById('stream').style.display = 'none';
+    } else {
+        document.getElementById('play').style.display = 'none';
+        document.getElementById('stream').style.display = 'block';
+    }
+    
+}
+
+function onClickAdjustPosition() {
+    let div = document.getElementById('control-panel');
+    if (div.style.display == 'none') {
+        div.style.display = 'flex';
+    } else {
+        div.style.display = 'none';
+    }
+}
+
+var voiceState = false;
+function onClickVoiceSwitch() {
+    if (voiceState == true) {
+        document.getElementById('voiceSwitch').src = "img/voice-off.png";
+        voiceState = false;
+    } else {
+        document.getElementById('voiceSwitch').src = "img/voice-on.png";
+        voiceState = true;
+    }
+}
