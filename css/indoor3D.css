@@ -181,7 +181,7 @@ html body {
 }
 
 
-@media screen and (orientation: portrait) {
+/*@media screen and (orientation: portrait) {*/
 
     .control-bar {
         width: 80%;
@@ -207,4 +207,4 @@ html body {
     .control-bar div:active{
         background-color: #2D74D9;
     }
-}
+/*}*/
