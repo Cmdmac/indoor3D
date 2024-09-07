@@ -42,13 +42,14 @@
     <div id="tab2" class="content">
         <div class="stream-container">
             <div class="stream" onclick="onRequestStream()">
-                <img id="stream" style="display: none;" src="https://lanoonan.com/wp-content/uploads/2015/06/start-sutra-3.png" >
+                <img id="stream" style="display: none;" >
                 <img id="play" src="img/play.png" style="width: 30px; height: 30px; ">
+                <label id="stream_loading_state" style="display: none;" >loading...</label>
             </div>
             <div id="control-bar" class="control-bar">
                 <div onclick="onClickVoiceSwitch()"><img id="voiceSwitch" src="img/voice-off.png" /></div>
                 <div ><img id="capturePhoto" src="img/photo.png" /></div>
-                <div ><img id="adjustPosition" onclick="onClickAdjustPosition()" src="img/directions.png" /></div>
+                <div onclick="onClickAdjustPosition()" ><img id="adjustPosition" src="img/directions.png" /></div>
             </div>
             <div id="control-panel" class="control-panel" style="display:none;">
 

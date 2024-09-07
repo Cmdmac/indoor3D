@@ -73,13 +73,31 @@ function decreaseFrameSize() {
 }
 
 function onRequestStream() {
-    if (document.getElementById('play').style.display == 'none') {
-        document.getElementById('play').style.display = 'block';
-        document.getElementById('stream').style.display = 'none';
-    } else {
-        document.getElementById('play').style.display = 'none';
-        document.getElementById('stream').style.display = 'block';
+    let img = document.getElementById('stream');
+    let play = document.getElementById('play');
+    let stream_loading_state = document.getElementById('stream_loading_state');
+    let state = stream_loading_state.loadingState;
+    if (state == undefined) {
+        play.style.display = 'none';
+        img.style.display = 'block';
+        stream_loading_state.style.display = 'block';
+        img.src = "http://192.168.2.155:81/stream";
+        img.onerror = function() {
+            // this.src = 'img/play.png';
+            img.style.display = 'none';
+            stream_loading_state.innerText = "load failure, click to retry";
+            stream_loading_state.loadingState = 'failure';
+            stream_loading_state.style.display = 'block';
+        }
+    } else if (state == 'failure') {
+        // retry
+        img.src = "";
+        img.src = "http://192.168.2.155:81/stream";
+        stream_loading_state.innerText = "loading...";
+        stream_loading_state.loadingState = "loading";
     }
+        
+    
     
 }
 

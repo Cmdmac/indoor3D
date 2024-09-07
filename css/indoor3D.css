@@ -140,6 +140,7 @@ html body {
     justify-content: center;
     align-items: center;
     background-color: lightgray;
+    flex-direction: column;
 }
 
 .stream img {
