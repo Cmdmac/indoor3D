@@ -673,8 +673,7 @@ Canvas2DRenderer = function (map) {
                 
                 _ctx.rotate(direction * Math.PI / 180); 
 
-                _ctx.drawImage(image, -  imgWidthHalf, - imgWidthHalf, imgWidth, imgHeight);
-                
+                _ctx.drawImage(image, -imgWidthHalf, - imgWidthHalf, imgWidth, imgHeight);
             }
         }
 
@@ -770,7 +769,11 @@ Canvas2DRenderer = function (map) {
                         imgHeightHalf = imgHeight / 2;
                         // rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
                         _ctx.drawImage(image, (center[0] - imgWidthHalf) >> 0, (-center[1] - imgHeightHalf) >> 0, imgWidth, imgHeight);
+                        _ctx.strokeStyle = "gray";
+                        _ctx.lineWidth = 0.8;
+                        _ctx.strokeText(pubPoints[i].Name, (center[0] + imgWidthHalf) >> 0, (-center[1] - imgHeightHalf) >> 0);
                     }
+
                 }
             }
         }
