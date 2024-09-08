@@ -48,6 +48,21 @@ function onBodyLoad() {
         });
     });
 
+    const canvas = document.getElementById('car-controller');
+    const ctx = canvas.getContext('2d');
+    const imgWidth = document.getElementById('circle').style.width;
+    const imgHeight = document.getElementById('circle').style.height;
+    var img = new Image();
+    img.src = 'img/circle.png';
+
+    // 当图片加载完成后绘制它
+    img.onload = function () {
+        // 在 canvas 上绘制图像
+        console.log(canvas.style.width )
+        ctx.drawImage(img, canvas.style.width - imgWidth / 2, canvas.style.height - imgHeight / 2, imgWidth, imgWidth);
+    }
+
+
 }
 
 function zoomIn() {
