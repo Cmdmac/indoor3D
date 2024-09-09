@@ -48,19 +48,7 @@ function onBodyLoad() {
         });
     });
 
-    const canvas = document.getElementById('car-controller');
-    const ctx = canvas.getContext('2d');
-    const imgWidth = document.getElementById('circle').style.width;
-    const imgHeight = document.getElementById('circle').style.height;
-    var img = new Image();
-    img.src = 'img/circle.png';
-
-    // 当图片加载完成后绘制它
-    img.onload = function () {
-        // 在 canvas 上绘制图像
-        console.log(canvas.style.width )
-        ctx.drawImage(img, canvas.style.width - imgWidth / 2, canvas.style.height - imgHeight / 2, imgWidth, imgWidth);
-    }
+    drawControler();
 
 
 }
@@ -96,7 +84,10 @@ function onRequestStream() {
         play.style.display = 'none';
         img.style.display = 'block';
         stream_loading_state.style.display = 'block';
-        img.src = "http://192.168.2.155:81/stream";
+        img.src = "http://192.168.2.50:81/stream";
+        img.onload = function() {
+            stream_loading_state.style.display = 'none';
+        }
         img.onerror = function() {
             // this.src = 'img/play.png';
             img.style.display = 'none';
@@ -107,7 +98,7 @@ function onRequestStream() {
     } else if (state == 'failure') {
         // retry
         img.src = "";
-        img.src = "http://192.168.2.155:81/stream";
+        img.src = "http://192.168.2.50:81/stream";
         stream_loading_state.innerText = "loading...";
         stream_loading_state.loadingState = "loading";
     }
@@ -134,4 +125,28 @@ function onClickVoiceSwitch() {
         document.getElementById('voiceSwitch').src = "img/voice-on.png";
         voiceState = true;
     }
+}
+
+function drawControler() {
+    const canvas = document.getElementById('car-controller-direction');
+    const ctx = canvas.getContext('2d');
+    const imgWidth = document.getElementById('circle').style.width;
+    const imgHeight = document.getElementById('circle').style.height;
+    var img = new Image();
+    img.src = 'img/circle.png';
+
+    // 当图片加载完成后绘制它
+    img.onload = function () {
+        // 在 canvas 上绘制图像
+        console.log(canvas.style.width )
+        ctx.drawImage(img, canvas.style.width - imgWidth / 2, canvas.style.height - imgHeight / 2, imgWidth, imgWidth);
+    }
+
+    const canvas2 = document.getElementById('car-controller-right');
+    const ctx2 = canvas2.getContext('2d');
+    ctx2.beginPath();
+    ctx2.arc(40, 40, 40, -Math.PI, 0);
+    ctx2.strokeStyle = 'blue';
+    ctx2.lineWidth = 2;
+    ctx2.stroke();
 }
