@@ -160,38 +160,50 @@ html body {
 }
 
 .car-control-panel-left {
-    position: absolute;
-    left: 0px;
-    flex-direction: column;
-    align-items: center;
-    background-image: url('../img/circle.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
-.car-control-panel-left canvas {
-    position: absolute;
-    left: 0px;
-    width: 100%;
-    height: 100%;
+    display: none;
 }
 
 .car-control-panel-right {
-    position: absolute;
-    right: 0px;
-    flex-direction: column;
-    align-items: center;
+    display: none;
 }
 
-.car-control-panel-right canvas {
-    position: absolute;
-    left: 0px;
-    width: 100%;
-    height: 100%;
+@media screen and (min-width: 600px) {
+    .car-control-panel-left {
+        display: block;
+        position: absolute;
+        left: 0px;
+        flex-direction: column;
+        align-items: center;
+        background-image: url('../img/circle.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    }
+
+
+    .car-control-panel-left canvas {
+        position: absolute;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .car-control-panel-right {
+        display: block;
+        position: absolute;
+        right: 0px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .car-control-panel-right canvas {
+        position: absolute;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
 }
-
-
 .control-panel-row {
     display: flex;
     flex-direction: row;
