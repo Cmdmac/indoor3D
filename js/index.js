@@ -132,21 +132,22 @@ function drawControler() {
     const ctx = canvas.getContext('2d');
     const imgWidth = document.getElementById('circle').style.width;
     const imgHeight = document.getElementById('circle').style.height;
-    var img = new Image();
-    img.src = 'img/circle.png';
+    let image = null;
+    let loader = new THREE.ImageLoader();
+    loader.load("../img/circle.png", function(img){
+        // console.log("load image")
+        image = img;
+          // 获取设备像素比
+        var dpr = window.devicePixelRatio || 1;
+        const canvas2 = document.getElementById('car-controller-right');
+        const w = canvas2.width;
+        const h = canvas2.height;
+        const imageWidth = 25 * dpr;
+        const imageHeight = 25 * dpr;
+        const ctx2 = canvas2.getContext('2d');
 
-    // 当图片加载完成后绘制它
-    img.onload = function () {
-        // 在 canvas 上绘制图像
-        console.log(canvas.style.width )
-        ctx.drawImage(img, canvas.style.width - imgWidth / 2, canvas.style.height - imgHeight / 2, imgWidth, imgWidth);
-    }
 
-    const canvas2 = document.getElementById('car-controller-right');
-    const ctx2 = canvas2.getContext('2d');
-    ctx2.beginPath();
-    ctx2.arc(40, 40, 40, -Math.PI, 0);
-    ctx2.strokeStyle = 'blue';
-    ctx2.lineWidth = 2;
-    ctx2.stroke();
+        ctx2.drawImage(img, w / 2 - imageWidth / 2, h / 2 - imageHeight / 2, imageWidth, imageHeight);
+    })
+    
 }

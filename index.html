@@ -45,6 +45,40 @@
                 <img id="stream" style="display: none;" >
                 <img id="play" src="img/play.png" style="width: 30px; height: 30px; ">
                 <label id="stream_loading_state" style="display: none;" >loading...</label>
+                <div id="car-control-panel-left" class="car-control-panel-left" >
+                <canvas id="car-controller-direction"></canvas>
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/up.png"></div>
+                    <div></div>
+                </div>
+                <div class="control-panel-row">
+                    <div><img src="img/left.png"></div>
+                    <div><img id="circle" src="img/circle.png" /></div>          
+                    <div><img src="img/right.png"></div>
+                </div>
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/down.png"></div>
+                    <div></div>
+                </div>
+            </div>
+            <div id="car-control-panel-right" class="car-control-panel-right" >
+                <canvas id="car-controller-right" width="240px" height="240px"></canvas>
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/up.png"></div>
+                    <div></div>
+                </div>
+                <div class="control-panel-row">
+                    <div><img id="circle" src="img/circle.png" style="display: none" /></div>          
+                </div>               
+                <div class="control-panel-row">
+                    <div></div>
+                    <div><img src="img/down.png"></div>
+                    <div></div>
+                </div>
+            </div>
             </div>
             <div id="control-bar" class="control-bar">
                 <div onclick="onClickVoiceSwitch()"><img id="voiceSwitch" src="img/voice-off.png" /></div>
@@ -69,40 +103,7 @@
                     <div></div>
                 </div>
             </div>
-            <div id="car-control-panel-left" class="car-control-panel-left" >
-                <canvas id="car-controller-direction"></canvas>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/up.png"></div>
-                    <div></div>
-                </div>
-                <div class="control-panel-row">
-                    <div><img src="img/left.png"></div>
-                    <div><img id="circle" src="img/circle.png" /></div>          
-                    <div><img src="img/right.png"></div>
-                </div>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/down.png"></div>
-                    <div></div>
-                </div>
-            </div>
-            <div id="car-control-panel-right" class="car-control-panel-right" >
-                <canvas id="car-controller-right"></canvas>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/up.png"></div>
-                    <div></div>
-                </div>
-                <div class="control-panel-row">
-                    <div><img id="circle" src="img/circle.png" /></div>          
-                </div>               
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/down.png"></div>
-                    <div></div>
-                </div>
-            </div>
+            
         </div>
         
     </div>
