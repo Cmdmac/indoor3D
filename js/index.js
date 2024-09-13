@@ -48,7 +48,8 @@ function onBodyLoad() {
         });
     });
 
-    drawControler();
+    drawLeftController();
+    drawRightControler();
 
 
 }
@@ -127,9 +128,25 @@ function onClickVoiceSwitch() {
     }
 }
 
-function drawControler() {
+function drawLeftController() {
     const canvas = document.getElementById('car-controller-direction');
     const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.strokeStyle = 'gray';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, w / 2 - 5, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.arc(w / 2, h / 2, 30, 0, 2 * Math.PI);
+    ctx.stroke();
+}
+
+function drawRightControler() {
+
     const imgWidth = document.getElementById('circle').style.width;
     const imgHeight = document.getElementById('circle').style.height;
     let image = null;
@@ -146,8 +163,24 @@ function drawControler() {
         const imageHeight = 25 * dpr;
         const ctx2 = canvas2.getContext('2d');
 
+        const r = 40;
+        ctx2.beginPath();
+        ctx2.arc(w/2, r + 1, r, -Math.PI, 0);
+        ctx2.strokeStyle = 'gray';
+        ctx2.lineWidth = 2;
+        ctx2.stroke();
+        ctx2.beginPath();
+        ctx2.moveTo(w/2 - r, r + 2);
+        ctx2.lineTo(w/2 - r, r * 5);
+        ctx2.stroke();
+        ctx2.beginPath();
+        ctx2.arc(w/2, r * 5 - 1, r, 0, Math.PI);
+        ctx2.moveTo(w/2 + r, r * 5);
+        ctx2.lineTo(w/2 + r, r);
+        ctx2.stroke();
 
-        ctx2.drawImage(img, w / 2 - imageWidth / 2, h / 2 - imageHeight / 2, imageWidth, imageHeight);
+        ctx2.drawImage(img, w / 2 - 20, h / 2 - 20, 40, 40);
+
     })
     
 }
