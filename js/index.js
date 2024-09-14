@@ -48,6 +48,11 @@ function onBodyLoad() {
         });
     });
 
+    document.addEventListener('wheel', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+
+    initController();
     drawLeftController();
     drawRightControler();
 
@@ -128,21 +133,54 @@ function onClickVoiceSwitch() {
     }
 }
 
-function drawLeftController() {
+controllerRender = undefined;
+function initController() {
+    const canvas = document.getElementById('car-controller-direction');
+    controllerRender = new ControllerRender(canvas);
+    canvas.addEventListener('mousedown', function (event) {
+            // this.style.backgroundColor = 'red';
+            console.log('down');
+             event.preventDefault();
+    }, false);
+
+    canvas.addEventListener('mousemove', function (event) {
+            // this.style.backgroundColor = 'red';
+        event.preventDefault()
+            console.log('move');
+    }, false);
+
+    canvas.addEventListener('mouseup', function (event) {
+            // this.style.backgroundColor = 'red';
+            console.log('up');
+    }, false);
+
+    canvas.addEventListener('touchstart', function (event) {
+            // this.style.backgroundColor = 'red';
+            console.log('touchstart');
+             event.preventDefault();
+    }, false);
+
+    canvas.addEventListener('touchmove', function (event) {
+            // this.style.backgroundColor = 'red';
+            console.log('touchmove');
+             event.preventDefault();
+    }, false);
+
+    canvas.addEventListener('touchend', function (event) {
+            // this.style.backgroundColor = 'red';
+            console.log('touchend');
+             event.preventDefault();
+    }, false);
+}
+
+function drawLeftController(x, y) {
     const canvas = document.getElementById('car-controller-direction');
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
-    ctx.strokeStyle = 'gray';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(w / 2, h / 2, w / 2 - 5, 0, 2 * Math.PI);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.arc(w / 2, h / 2, 30, 0, 2 * Math.PI);
-    ctx.stroke();
+    if (controllerRender != undefined) {
+        controllerRender.draw(w / 2, h / 2);
+    }
 }
 
 function drawRightControler() {
@@ -170,7 +208,7 @@ function drawRightControler() {
         ctx2.lineWidth = 2;
         ctx2.stroke();
         ctx2.beginPath();
-        ctx2.moveTo(w/2 - r, r + 2);
+        ctx2.moveTo(w/2 - r, r + 1);
         ctx2.lineTo(w/2 - r, r * 5);
         ctx2.stroke();
         ctx2.beginPath();

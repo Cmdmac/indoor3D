@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0 user-scalable=no">
+
     <title></title>
     <script src="js/three.min.js"></script>
     <!-- <script src="js/Detector.js"></script> -->
@@ -14,6 +15,7 @@
     <script src="js/IndoorMap2dEx.js"></script>
     <!-- <script src="js/IndoorMap3d.js"></script> -->
     <script src="js/Theme.js"></script>
+    <script src="js/controllerRender.js"></script>
     <script src="js/index.js"></script>
     <link href="css/indoor3D.css" rel="stylesheet">
 </head>
@@ -41,68 +43,68 @@
     </div>
     <div id="tab2" class="content">
         <div class="stream-container">
-            <div class="stream" onclick="onRequestStream()">
+            <div id="streamParent" class="stream" onclick="onRequestStream()">
                 <img id="stream" style="display: none;" >
                 <img id="play" src="img/play.png" style="width: 30px; height: 30px; ">
                 <label id="stream_loading_state" style="display: none;" >loading...</label>
                 <div id="car-control-panel-left" class="car-control-panel-left" >
-                <canvas id="car-controller-direction" width="240px" height="240px"></canvas>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/up.png"></div>
-                    <div></div>
+                    <canvas id="car-controller-direction" width="240px" height="240px"></canvas>
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/up.png"></div>
+                        <div></div>
+                    </div>
+                    <div class="control-panel-row">
+                        <div><img src="img/left.png"></div>
+                        <div><img id="circle" src="img/circle.png" style="visibility: hidden;" /></div>          
+                        <div><img src="img/right.png"></div>
+                    </div>
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/down.png"></div>
+                        <div></div>
+                    </div>
                 </div>
-                <div class="control-panel-row">
-                    <div><img src="img/left.png"></div>
-                    <div><img id="circle" src="img/circle.png" style="visibility: hidden;" /></div>          
-                    <div><img src="img/right.png"></div>
+                <div id="car-control-panel-right" class="car-control-panel-right" >
+                    <canvas id="car-controller-right" width="240px" height="240px"></canvas>
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/up.png"></div>
+                        <div></div>
+                    </div>
+                    <div class="control-panel-row">
+                        <div><img id="circle" src="img/circle.png" style="display: none" /></div>          
+                    </div>               
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/down.png"></div>
+                        <div></div>
+                    </div>
                 </div>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/down.png"></div>
-                    <div></div>
                 </div>
-            </div>
-            <div id="car-control-panel-right" class="car-control-panel-right" >
-                <canvas id="car-controller-right" width="240px" height="240px"></canvas>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/up.png"></div>
-                    <div></div>
+                <div id="control-bar" class="control-bar">
+                    <div onclick="onClickVoiceSwitch()"><img id="voiceSwitch" src="img/voice-off.png" /></div>
+                    <div ><img id="capturePhoto" src="img/photo.png" /></div>
+                    <div onclick="onClickAdjustPosition()" ><img id="adjustPosition" src="img/directions.png" /></div>
                 </div>
-                <div class="control-panel-row">
-                    <div><img id="circle" src="img/circle.png" style="display: none" /></div>          
-                </div>               
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/down.png"></div>
-                    <div></div>
-                </div>
-            </div>
-            </div>
-            <div id="control-bar" class="control-bar">
-                <div onclick="onClickVoiceSwitch()"><img id="voiceSwitch" src="img/voice-off.png" /></div>
-                <div ><img id="capturePhoto" src="img/photo.png" /></div>
-                <div onclick="onClickAdjustPosition()" ><img id="adjustPosition" src="img/directions.png" /></div>
-            </div>
-            <div id="control-panel" class="control-panel" style="display:none;">
+                <div id="control-panel" class="control-panel" style="display:none;">
 
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/up.png"></div>
-                    <div></div>
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/up.png"></div>
+                        <div></div>
+                    </div>
+                    <div class="control-panel-row">
+                        <div><img src="img/left.png"></div>
+                        <div></div>          
+                        <div><img src="img/right.png"></div>
+                    </div>
+                    <div class="control-panel-row">
+                        <div></div>
+                        <div><img src="img/down.png"></div>
+                        <div></div>
+                    </div>
                 </div>
-                <div class="control-panel-row">
-                    <div><img src="img/left.png"></div>
-                    <div></div>          
-                    <div><img src="img/right.png"></div>
-                </div>
-                <div class="control-panel-row">
-                    <div></div>
-                    <div><img src="img/down.png"></div>
-                    <div></div>
-                </div>
-            </div>
             
         </div>
         

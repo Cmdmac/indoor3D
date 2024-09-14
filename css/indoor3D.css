@@ -208,7 +208,7 @@ html body {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-
+/*    pointer-events: none;*/
 }
 
 .control-panel-row div{
