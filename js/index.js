@@ -133,92 +133,33 @@ function onClickVoiceSwitch() {
     }
 }
 
-controllerRender = undefined;
+directionControllerRender = undefined;
+speedControllerRender = undefined;
 function initController() {
-    const canvas = document.getElementById('car-controller-direction');
-    controllerRender = new ControllerRender(canvas);
-    canvas.addEventListener('mousedown', function (event) {
-            // this.style.backgroundColor = 'red';
-            console.log('down');
-             event.preventDefault();
-    }, false);
-
-    canvas.addEventListener('mousemove', function (event) {
-            // this.style.backgroundColor = 'red';
-        event.preventDefault()
-            console.log('move');
-    }, false);
-
-    canvas.addEventListener('mouseup', function (event) {
-            // this.style.backgroundColor = 'red';
-            console.log('up');
-    }, false);
-
-    canvas.addEventListener('touchstart', function (event) {
-            // this.style.backgroundColor = 'red';
-            console.log('touchstart');
-             event.preventDefault();
-    }, false);
-
-    canvas.addEventListener('touchmove', function (event) {
-            // this.style.backgroundColor = 'red';
-            console.log('touchmove');
-             event.preventDefault();
-    }, false);
-
-    canvas.addEventListener('touchend', function (event) {
-            // this.style.backgroundColor = 'red';
-            console.log('touchend');
-             event.preventDefault();
-    }, false);
+    const directionCanvas = document.getElementById('car-controller-direction');
+    const speedCanvas = document.getElementById('car-controller-right');
+    directionControllerRender = new DirectionControllerRender(directionCanvas);
+    speedControllerRender = new SpeedControllerRender(speedCanvas);
 }
 
-function drawLeftController(x, y) {
+function drawLeftController() {
     const canvas = document.getElementById('car-controller-direction');
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
-    if (controllerRender != undefined) {
-        controllerRender.draw(w / 2, h / 2);
+    if (directionControllerRender != undefined) {
+        directionControllerRender.draw(w / 2, h / 2, false);
     }
 }
 
 function drawRightControler() {
 
-    const imgWidth = document.getElementById('circle').style.width;
-    const imgHeight = document.getElementById('circle').style.height;
-    let image = null;
-    let loader = new THREE.ImageLoader();
-    loader.load("../img/circle.png", function(img){
-        // console.log("load image")
-        image = img;
-          // 获取设备像素比
-        var dpr = window.devicePixelRatio || 1;
-        const canvas2 = document.getElementById('car-controller-right');
-        const w = canvas2.width;
-        const h = canvas2.height;
-        const imageWidth = 25 * dpr;
-        const imageHeight = 25 * dpr;
-        const ctx2 = canvas2.getContext('2d');
-
-        const r = 40;
-        ctx2.beginPath();
-        ctx2.arc(w/2, r + 1, r, -Math.PI, 0);
-        ctx2.strokeStyle = 'gray';
-        ctx2.lineWidth = 2;
-        ctx2.stroke();
-        ctx2.beginPath();
-        ctx2.moveTo(w/2 - r, r + 1);
-        ctx2.lineTo(w/2 - r, r * 5);
-        ctx2.stroke();
-        ctx2.beginPath();
-        ctx2.arc(w/2, r * 5 - 1, r, 0, Math.PI);
-        ctx2.moveTo(w/2 + r, r * 5);
-        ctx2.lineTo(w/2 + r, r);
-        ctx2.stroke();
-
-        ctx2.drawImage(img, w / 2 - 20, h / 2 - 20, 40, 40);
-
-    })
+    const canvas = document.getElementById('car-controller-right');
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    if (speedControllerRender != undefined) {
+        speedControllerRender.draw(w / 2, h / 2, false);
+    }
     
 }
