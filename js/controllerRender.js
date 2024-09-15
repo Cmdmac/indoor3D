@@ -10,6 +10,7 @@ class DirectionControllerRender {
     	this.rOut = this.w / 2;
     	this.padding = 10;
     	this.overDistance = this.rIn + this.padding;
+    	this.btnListeners = [];
 
     	// console.log(canvas.parentNode.parentNode.getBoundingClientRect())
     	this.offsetTop = 200;
@@ -34,7 +35,8 @@ class DirectionControllerRender {
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
 			let result = render.onWhichButton(render.currentX, render.currentY, 
 				render.w / 2, render.h / 2, render.rIn, render.rOut);
-			console.log(result); 
+			// console.log(result); 
+			render.btnListeners.forEach(listener => listener(result));
     	};
     	let upMouseHandler = function(event) {
 	        event.preventDefault();
@@ -71,7 +73,7 @@ class DirectionControllerRender {
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
 			let result = render.onWhichButton(render.currentX, render.currentY, 
 				render.w / 2, render.h / 2, render.rIn, render.rOut);
-			console.log(result); 
+			render.btnListeners.forEach(listener => listener(result));
 	    };
 	    let upTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
@@ -90,6 +92,10 @@ class DirectionControllerRender {
 	    let dy = y2 - y1;
 	    let distance = Math.sqrt(dx * dx + dy * dy);
 	    return distance;
+	}
+
+	addButtonListener(listener) {
+		this.btnListeners.push(listener);
 	}
 
 	onWhichButton(x, y, x0, y0, rIn, rOut) {
@@ -185,6 +191,7 @@ class SpeedControllerRender {
 		this.ctx = canvas.getContext('2d');
     	this.w = canvas.width;
     	this.h = canvas.height;
+    	this.btnListeners = [];
 
     	let render = this;
     	canvas.addEventListener('mousedown', function(event) {
@@ -215,6 +222,8 @@ class SpeedControllerRender {
             if (render.isDragging) {
             	render.draw(render.currentX, render.currentY, render.isDragging);
             }
+            let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
+            render.btnListeners.forEach(listener => listener(button));
     	});
 	    canvas.addEventListener('touchmove', function (event) {
 	            // this.style.backgroundColor = 'red';
@@ -228,6 +237,8 @@ class SpeedControllerRender {
             if (render.isDragging) {
             	render.draw(render.currentX, render.currentY, render.isDragging);
             }
+            let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
+            render.btnListeners.forEach(listener => listener(button));
 	    }, false);
 
 	    canvas.addEventListener('mouseup', function(event) {
@@ -242,6 +253,21 @@ class SpeedControllerRender {
 	        render.isDragging = false;
 	        render.draw(render.w / 2, render.h / 2, false);
 	    }, false);
+	}
+
+	addButtonListener(listener) {
+		this.btnListeners.push(listener);
+	}
+
+	onWhichButton(x, y, x0, y0) {
+		const dy = y - y0;
+		// console.log(dy);
+		if (dy < -40) {
+			return 1;
+		} else if (dy > 40) {
+			return 0;
+		}
+		return -1;
 	}
 
 	draw(x, y, dragging) {

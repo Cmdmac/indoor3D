@@ -139,7 +139,13 @@ function initController() {
     const directionCanvas = document.getElementById('car-controller-direction');
     const speedCanvas = document.getElementById('car-controller-right');
     directionControllerRender = new DirectionControllerRender(directionCanvas);
+    directionControllerRender.addButtonListener(function(button) {
+        console.log(button);
+    });
     speedControllerRender = new SpeedControllerRender(speedCanvas);
+    speedControllerRender.addButtonListener(function(button) {
+        console.log(button);
+    });
 }
 
 function drawLeftController() {
