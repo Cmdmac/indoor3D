@@ -6,9 +6,9 @@ class DirectionControllerRender {
 		this.ctx = canvas.getContext('2d');
     	this.w = canvas.width;
     	this.h = canvas.height;
-    	this.rIn = 30;
+    	this.rIn = 50;
     	this.rOut = this.w / 2;
-    	this.padding = 10;
+    	this.padding = 0;
     	this.overDistance = this.rIn + this.padding;
     	this.btnListeners = [];
 
@@ -28,15 +28,16 @@ class DirectionControllerRender {
             render.currentX = event.clientX  - render.offsetLeft;
             render.currentY = event.clientY - 75;
             event.preventDefault();
-            if (render.isDragging) {
-            	render.draw(render.currentX, render.currentY, render.isDragging);
-            }
 
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
-			let result = render.onWhichButton(render.currentX, render.currentY, 
+			let button = render.onWhichButton(render.currentX, render.currentY,
 				render.w / 2, render.h / 2, render.rIn, render.rOut);
 			// console.log(result); 
-			render.btnListeners.forEach(listener => listener(result));
+			render.btnListeners.forEach(listener => listener(button));
+
+			if (render.isDragging) {
+				render.draw(render.currentX, render.currentY, button, render.isDragging);
+			}
     	};
     	let upMouseHandler = function(event) {
 	        event.preventDefault();
@@ -66,14 +67,15 @@ class DirectionControllerRender {
             render.currentX = touch.clientX  - render.offsetLeft;
             render.currentY = touch.clientY - 75;
             event.preventDefault();
-            if (render.isDragging) {
-            	render.draw(render.currentX, render.currentY, render.isDragging);
-            }
 
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
-			let result = render.onWhichButton(render.currentX, render.currentY, 
+			let button = render.onWhichButton(render.currentX, render.currentY,
 				render.w / 2, render.h / 2, render.rIn, render.rOut);
-			render.btnListeners.forEach(listener => listener(result));
+			render.btnListeners.forEach(listener => listener(button));
+
+			if (render.isDragging) {
+				render.draw(render.currentX, render.currentY, button, render.isDragging);
+			}
 	    };
 	    let upTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
@@ -143,7 +145,7 @@ class DirectionControllerRender {
 	    return -1;
 	}
 
-	draw(x, y, dragging) {
+	draw(x, y, button, dragging) {
 		const ctx = this.ctx;
 		const w = this.w;
 		const h = this.h;
@@ -153,9 +155,9 @@ class DirectionControllerRender {
 	    ctx.beginPath();
 	    ctx.arc(w / 2, h / 2, w / 2 - 5, 0, 2 * Math.PI);
 	    ctx.stroke();
-	    ctx.beginPath();
-	    ctx.arc(w / 2, h / 2, this.rIn + 20, 0, 2 * Math.PI);
-	    ctx.stroke();
+	    // ctx.beginPath();
+	    // ctx.arc(w / 2, h / 2, this.rIn, 0, 2 * Math.PI);
+	    // ctx.stroke();
 
 	    ctx.beginPath();
 
@@ -170,18 +172,51 @@ class DirectionControllerRender {
             y = y0 + (y - y0) * ratio;
         }
 	    
-	    if (dragging) {
-	    	ctx.lineWidth = 2;
-	    	ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
-	    	ctx.fillStyle = 'lightgray';
+	    if (d > this.rIn && dragging) {
+	    	// ctx.lineWidth = 2;
+	    	// ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
+	    	// ctx.fillStyle = 'lightgray';
+			// ctx.fill();
+
+			let startArc = button * Math.PI / 4 - Math.PI / 8;
+			let endArc = startArc + Math.PI / 4;
+
+			let xInStartArc = x0 + this.rIn * Math.cos(startArc);
+			let yInStartArc = y0 + this.rIn * Math.sin(startArc);
+			let xOutStartArc = x0 + (this.rOut - 5) * Math.cos(startArc);
+			let yOutStartArc = y0 + (this.rOut - 5) * Math.sin(startArc);
+
+			let xInEndArc = x0 + this.rIn * Math.cos(endArc);
+			let yInEndArc = y0 + this.rIn * Math.sin(endArc);
+			let xOutEndArc = x0 + (this.rOut - 5) * Math.cos(endArc);
+			let yOutEndArc = y0 + (this.rOut - 5) * Math.sin(endArc);
+
+			ctx.beginPath();
+			ctx.arc(x0, y0, this.rIn, startArc, endArc);
+			ctx.arc(x0, y0, this.rOut - 5, endArc, startArc, true);
+			// ctx.stroke();
+			// ctx.beginPath();
+			// ctx.moveTo(xInEndArc, yInEndArc);
+			// ctx.lineTo(xOutEndArc, yOutEndArc);
+			// ctx.stroke();
+			// ctx.beginPath();
+
+			// ctx.stroke();
+			// ctx.beginPath();
+			ctx.lineTo(xOutStartArc, yOutStartArc);
+			ctx.lineTo(xInStartArc, yInStartArc);
+			ctx.closePath();
+			ctx.fillStyle = 'gray';
 			ctx.fill();
+
 	    } else {
 	    	ctx.lineWidth = 1;
 	    	ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
+			ctx.stroke();
 	    	// ctx.fillStyle = 'lightgray';
 			// ctx.fill();
 	    }
-	  	ctx.stroke();
+
 	    
 	}
 }
@@ -289,7 +324,7 @@ class SpeedControllerRender {
         const r = 40;
         ctx.beginPath();
         ctx.arc(w/2, r + 1, r, -Math.PI, 0);
-        ctx.strokeStyle = 'gray';
+        ctx.strokeStyle = '#777777';
         ctx.lineWidth = 2;
         ctx.stroke();
         ctx.beginPath();
