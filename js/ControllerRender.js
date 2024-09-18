@@ -159,8 +159,6 @@ class DirectionControllerRender {
 	    // ctx.arc(w / 2, h / 2, this.rIn, 0, 2 * Math.PI);
 	    // ctx.stroke();
 
-	    ctx.beginPath();
-
 	   	const r = this.rIn;
 	   	const x0 = w / 2;
 	   	const y0 = h / 2;
@@ -168,11 +166,13 @@ class DirectionControllerRender {
 	   	const rd = w / 2 - 10 - r;
 	   	if (d > rd) {
             let ratio = rd / d;
-            x = x0 + (x - x0) * ratio;
-            y = y0 + (y - y0) * ratio;
+            // x = x0 + (x - x0) * ratio;
+            // y = y0 + (y - y0) * ratio;
+            x = x0;
+            y = y0;
         }
 	    
-	    if (d > this.rIn && dragging) {
+	    if (d > this.rIn && dragging && button > 0) {
 	    	// ctx.lineWidth = 2;
 	    	// ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
 	    	// ctx.fillStyle = 'lightgray';
@@ -209,7 +209,18 @@ class DirectionControllerRender {
 			ctx.fillStyle = 'gray';
 			ctx.fill();
 
+			// let arrowR = this.rIn + (this.rOut - this.rIn) / 2;
+			// let arrowArc = startArc + (endArc - startArc) / 2;
+			// let arrowX = x0 + arrowR * Math.cos(arrowArc);
+			// let arrowY = y0 + arrowR * Math.sin(arrowArc);
+			// ctx.beginPath();
+			// ctx.arc(arrowX, arrowY, 10, 0, 2 * Math.PI);
+			// ctx.lineWidth = 1;
+			// ctx.strokeStyle = "black";
+			// ctx.stroke();
+
 	    } else {
+	    	ctx.beginPath();
 	    	ctx.lineWidth = 1;
 	    	ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
 			ctx.stroke();
