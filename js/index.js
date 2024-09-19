@@ -35,27 +35,30 @@ function onBodyLoad() {
     const tabs = document.querySelectorAll('.tab');
     const contents = document.querySelectorAll('.content');
 
-    tabs.forEach(tab => {
+    tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => {
-        // 移除所有 tab 和内容的激活状态
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
+            // 移除所有 tab 和内容的激活状态
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
 
-        // 设置点击的 tab 和对应的内容为激活状态
-        const targetTab = tab.dataset.tab;
-        document.getElementById(targetTab).classList.add('active');
-        tab.classList.add('active');
-        });
+            // 设置点击的 tab 和对应的内容为激活状态
+            const targetTab = tab.dataset.tab;
+            document.getElementById(targetTab).classList.add('active');
+            tab.classList.add('active');
+            });
+
+            if (tab.isInit === undefined) {
+                initController();
+                drawLeftController();
+                drawRightControler();
+                tab.isInit = true;
+            }
+
     });
 
     document.addEventListener('wheel', function (event) {
             event.preventDefault();
         }, { passive: false });
-
-    initController();
-    drawLeftController();
-    drawRightControler();
-
 
 }
 
