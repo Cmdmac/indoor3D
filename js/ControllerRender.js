@@ -16,6 +16,8 @@ class DirectionControllerRender {
     	this.offsetTop = 200;
     	this.offsetLeft = canvas.getBoundingClientRect().left;
 
+		this.arrowImg = document.getElementById("upImg");
+
     	let render = this;
     	
     	let downMouseHandler = function(event) {
@@ -209,20 +211,29 @@ class DirectionControllerRender {
 			ctx.fillStyle = 'gray';
 			ctx.fill();
 
-			// let arrowR = this.rIn + (this.rOut - this.rIn) / 2;
-			// let arrowArc = startArc + (endArc - startArc) / 2;
-			// let arrowX = x0 + arrowR * Math.cos(arrowArc);
-			// let arrowY = y0 + arrowR * Math.sin(arrowArc);
+			let arrowR = this.rIn + (this.rOut - this.rIn - 10) / 2;
+			let arrowArc = startArc + (endArc - startArc) / 2;
+			let arrowX = x0 + arrowR * Math.cos(arrowArc);
+			let arrowY = y0 + arrowR * Math.sin(arrowArc);
 			// ctx.beginPath();
 			// ctx.arc(arrowX, arrowY, 10, 0, 2 * Math.PI);
 			// ctx.lineWidth = 1;
 			// ctx.strokeStyle = "black";
 			// ctx.stroke();
-
+			ctx.save();
+			ctx.translate(arrowX, arrowY);
+			ctx.rotate(arrowArc + Math.PI / 2);
+			ctx.drawImage(this.arrowImg, - 17.5, - 17.5, 35, 35);
+			ctx.restore();
 	    } else {
 	    	ctx.beginPath();
 	    	ctx.lineWidth = 1;
 	    	ctx.arc(x, y, this.rIn, 0, 2 * Math.PI);
+			if (dragging) {
+				ctx.fillStyle = "gray";
+				ctx.fill();
+			}
+
 			ctx.stroke();
 	    	// ctx.fillStyle = 'lightgray';
 			// ctx.fill();
