@@ -652,8 +652,8 @@ Canvas2DRenderer = function (map) {
             var image = _sprites[30001];
             if (image !== undefined) {
                 // console.log("type=" + pubPoints[i].Type + "," + image.width + "," + image.height);
-                const imgWidth = image.width / 2;
-                const imgHeight = image.height / 2;
+                const imgWidth = image.width / 1.5;
+                const imgHeight = image.height / 1.5;
                 const imgWidthHalf = imgWidth / 2;
                 const imgHeightHalf = imgHeight / 2;
                 // rect = new Rect(center[0] - imgWidthHalf, -center[1] - imgHeightHalf, center[0] + imgWidthHalf, -center[1] + imgHeightHalf);
@@ -673,7 +673,7 @@ Canvas2DRenderer = function (map) {
                 // _ctx.strokeStyle = 'blue';
                 // _ctx.lineWidth = 3;
                 // _ctx.stroke();
-                
+
                 _ctx.rotate(direction * Math.PI / 180); 
 
                 _ctx.drawImage(image, -imgWidthHalf, - imgWidthHalf, imgWidth, imgHeight);

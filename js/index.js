@@ -56,8 +56,6 @@ function onBodyLoad() {
         });
         // window.socket = socket;
 
-
-        map.updateCurrentLocation([100, 100], 80);
     });
         // init tabs
     const tabs = document.querySelectorAll('.tab');
