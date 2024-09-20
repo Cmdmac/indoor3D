@@ -1,4 +1,7 @@
 
+const DIRECTION = 100;
+const POSITION = 101;
+
 var map = undefined;
 function onBodyLoad() {
     var params = {
@@ -23,11 +26,36 @@ function onBodyLoad() {
 
         socket.addEventListener('message', (event) => {
             console.log(`收到消息: ${event.data}`);
-            const location = JSON.parse(event.data).data;            
-            map.updateCurrentLocation(location, 50);
-            map.refresh();
+            let o = JSON.parse(event.data);
+            switch(o.code) {
+            case DIRECTION:
+                const direction = o.data;
+                map.updateDirection(direction);
+                map.refresh();
+                break;
+            case POSITION:
+                const location = o.data;            
+                map.updateCurrentLocation(location);
+                map.refresh();
+                break;
+            }
         });
         window.socket = socket;
+
+        const socket2 = new WebSocket('ws://192.168.2.153:3000/mobile/hub?client=esp32s3');                
+        socket2.addEventListener('open', (event) => {
+          console.log('连接到mobile/hub已成功');
+        });
+
+        socket2.addEventListener('message', (event) => {
+            console.log(`收到消息: ${event.data}`);
+            
+        });
+        socket2.addEventListener('close', (event) => {
+            console.log('连接1已关闭');
+        });
+        // window.socket = socket;
+
 
         map.updateCurrentLocation([100, 100], 80);
     });

@@ -309,9 +309,12 @@ IndoorMap2dEx = function(mapdiv){
         // console.log("setNaviPath"+ _naviPath);
     }
 
-    this.updateCurrentLocation = function (location, direction) {
-        _this._location = location;
+    this.updateDirection = function(direction) {
         _this._direction = direction;
+    }
+
+    this.updateCurrentLocation = function (location) {
+        _this._location = location;
         _this.renderer.updateLocation();
     }
 
