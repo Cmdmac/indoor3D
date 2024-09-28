@@ -74,10 +74,9 @@ class DirectionControllerRender {
 			let button = render.onWhichButton(render.currentX, render.currentY,
 				render.w / 2, render.h / 2, render.rIn, render.rOut);
 			render.btnListeners.forEach(listener => listener(button));
-
-			if (render.isDragging) {
+			// if (render.isDragging) {
 				render.draw(render.currentX, render.currentY, button, render.isDragging);
-			}
+			// }
 	    };
 	    let upTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
@@ -141,8 +140,10 @@ class DirectionControllerRender {
 	    		return 8;
 	    	}
 	    	return degree;
-	    }
-	    
+	    } else if (distance > rOut) {
+			// console.log('out')
+			this.isDragging = false;
+		}
 
 	    return -1;
 	}
