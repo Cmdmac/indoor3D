@@ -142,7 +142,7 @@ class DirectionControllerRender {
 	    	return degree;
 	    } else if (distance > rOut) {
 			// console.log('out')
-			this.isDragging = false;
+			// this.isDragging = false;
 		}
 
 	    return -1;
