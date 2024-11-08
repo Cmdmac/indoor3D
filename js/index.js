@@ -19,7 +19,7 @@ function onBodyLoad() {
         // document.body.appendChild(ul);
         floorList.appendChild(ul);
 
-        const socket = new WebSocket('ws://localhost:3000/web');                
+        const socket = new WebSocket('ws://192.168.2.153:3000/web');                
         socket.addEventListener('open', (event) => {
           console.log('连接已打开');
         });
@@ -42,18 +42,18 @@ function onBodyLoad() {
         });
         window.socket = socket;
 
-        const socket2 = new WebSocket('ws://192.168.2.153:3000/mobile/hub?client=esp32s3');                
-        socket2.addEventListener('open', (event) => {
-          console.log('连接到mobile/hub已成功');
-        });
+        // const socket2 = new WebSocket('ws://192.168.2.153:3000/mobile/hub?client=esp32s3');                
+        // socket2.addEventListener('open', (event) => {
+        //   console.log('连接到mobile/hub已成功');
+        // });
 
-        socket2.addEventListener('message', (event) => {
-            console.log(`收到消息: ${event.data}`);
+        // socket2.addEventListener('message', (event) => {
+        //     console.log(`收到消息: ${event.data}`);
             
-        });
-        socket2.addEventListener('close', (event) => {
-            console.log('连接1已关闭');
-        });
+        // });
+        // socket2.addEventListener('close', (event) => {
+        //     console.log('连接1已关闭');
+        // });
         // window.socket = socket;
 
     });
@@ -169,7 +169,32 @@ function initController() {
     const speedCanvas = document.getElementById('car-controller-right');
     directionControllerRender = new DirectionControllerRender(directionCanvas);
     directionControllerRender.addButtonListener(function(button) {
+        if (this.lastState === button) {
+            return;
+        }
+        this.lastState = button;
+        
         console.log(button);
+        let cmd = {command: -1};
+        switch(button) {
+        case 2:
+            cmd.command = 2;
+            window.socket.send(JSON.stringify(cmd));
+            break;
+        case 6:
+            cmd.command = 1;
+            window.socket.send(JSON.stringify(cmd));
+            break;
+        case 8:
+            cmd.command = 4;
+            window.socket.send(JSON.stringify(cmd));
+            break;
+        case 4:
+            cmd.command = 3;
+            window.socket.send(JSON.stringify(cmd));
+            break;
+        }
+
     });
     speedControllerRender = new SpeedControllerRender(speedCanvas);
     speedControllerRender.addButtonListener(function(button) {
