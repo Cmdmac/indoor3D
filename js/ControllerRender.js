@@ -23,21 +23,20 @@ class DirectionControllerRender {
     	let downMouseHandler = function(event) {
     		event.preventDefault();
 	        render.isDragging = true;
-	        render.currentX = event.clientX  - render.offsetLeft;
-	        render.curretnY = event.clientY - render.offsetTop;
+            render.currentX = event.offsetX;
+            render.currentY = event.offsetY;
     	};
     	let moveMouseHandler = function(event) {
-            render.currentX = event.clientX  - render.offsetLeft;
-            render.currentY = event.clientY - 75;
-            event.preventDefault();
-
-            // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
-			let button = render.onWhichButton(render.currentX, render.currentY,
-				render.w / 2, render.h / 2, render.rIn, render.rOut);
-			// console.log(result); 
-			render.btnListeners.forEach(listener => listener(button));
+            render.currentX = event.offsetX;
+            render.currentY = event.offsetY;
+            event.preventDefault();            
 
 			if (render.isDragging) {
+				// 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
+				let button = render.onWhichButton(render.currentX, render.currentY,
+					render.w / 2, render.h / 2, render.rIn, render.rOut);
+				// console.log(result); 
+				render.btnListeners.forEach(listener => listener(button));
 				render.draw(render.currentX, render.currentY, button, render.isDragging);
 			}
     	};
@@ -52,22 +51,28 @@ class DirectionControllerRender {
 
 	    canvas.addEventListener('mouseup', upMouseHandler, false);
 
+	    canvas.addEventListener('mouseout', function(event) {
+	    	event.preventDefault();
+	        render.isDragging = false;
+	        render.draw(render.w / 2, render.h / 2, false);
+	    })
+
 	    let downTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
 	            console.log('touchstart');
 	             event.preventDefault();
 	             render.isDragging = true;
 	             let touch = event.touches[0];
-	             render.currentX = touch.clientX  - render.offsetLeft;
-	             render.curretnY = touch.clientY - render.offsetTop;
+	             render.currentX = touch.offsetX;
+	             render.curretnY = touch.offsetY;
 	             // console.log(render.offsetX + "," + render.offsetY);
 
 	    };
     	let moveTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
 	    	let touch = event.touches[0];
-            render.currentX = touch.clientX  - render.offsetLeft;
-            render.currentY = touch.clientY - 75;
+	        render.currentX = touch.offsetX;
+	        render.curretnY = touch.offsetY;
             event.preventDefault();
 
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
