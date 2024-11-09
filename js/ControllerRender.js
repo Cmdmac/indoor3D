@@ -255,8 +255,8 @@ class SpeedControllerRender {
     	canvas.addEventListener('mousedown', function(event) {
 				event.preventDefault();
 	             render.isDragging = true;
-	             render.currentX = event.clientX  - render.offsetLeft;
-	             render.curretnY = event.clientY - render.offsetTop;
+	             render.currentX = event.offsetX;
+	             render.curretnY = event.offsetY;
     	});
     	canvas.addEventListener('touchstart', function (event) {
 	            // this.style.backgroundColor = 'red';
@@ -264,44 +264,56 @@ class SpeedControllerRender {
 	             event.preventDefault();
 	             render.isDragging = true;
 	             let touch = event.touches[0];
-	             render.currentX = touch.clientX  - render.offsetLeft;
-	             render.curretnY = touch.clientY - render.offsetTop;
+	             render.currentX = touch.offsetX;
+	             render.curretnY = touch.offsetY;
 	             // console.log(render.offsetX + "," + render.offsetY);
 
 	    }, false);
 
     	canvas.addEventListener('mousemove', function(event) {
-            render.currentX = event.clientX  - render.offsetLeft;
-            render.currentY = event.clientY - 75;
+            render.currentX = event.offsetX;
+            render.currentY = event.offsetY;
+            if (render.currentY < 40) {
+            	render.currentY = 40;
+            } else if (render.currentY > render.h - 40) {
+            	render.currentY = render.h - 40;
+            }
             // console.log()
 
             // console.log('touchmove x=' + touch.clientY + " y=" + canvas.offsetTop);
             event.preventDefault();
             if (render.isDragging) {
+            	let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
+            	render.btnListeners.forEach(listener => listener(button));
             	render.draw(render.currentX, render.currentY, render.isDragging);
             }
-            let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
-            render.btnListeners.forEach(listener => listener(button));
+
     	});
 	    canvas.addEventListener('touchmove', function (event) {
 	            // this.style.backgroundColor = 'red';
 	    	let touch = event.touches[0];
-            render.currentX = touch.clientX  - render.offsetLeft;
-            render.currentY = touch.clientY - 75;
-            // console.log()
+            render.currentX = touch.offsetX;
+            render.currentY = touch.offsetY;
+            if (render.currentY < 40) {
+            	render.currentY = 40;
+            } else if (render.currentY > render.h - 40) {
+            	render.currentY = render.h - 40;
+            }
 
             // console.log('touchmove x=' + touch.clientY + " y=" + canvas.offsetTop);
             event.preventDefault();
             if (render.isDragging) {
+                let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
+            	render.btnListeners.forEach(listener => listener(button));
             	render.draw(render.currentX, render.currentY, render.isDragging);
             }
-            let button = render.onWhichButton(render.currentX, render.currentY, render.w / 2, render.h / 2);
-            render.btnListeners.forEach(listener => listener(button));
+
 	    }, false);
 
 	    canvas.addEventListener('mouseup', function(event) {
 	    	event.preventDefault();
 	        render.isDragging = false;
+	        render.btnListeners.forEach(listener => listener(0));
 	        render.draw(render.w / 2, render.h / 2, false);
 	    });
 	    canvas.addEventListener('touchend', function (event) {
@@ -309,8 +321,15 @@ class SpeedControllerRender {
 	        console.log('touchend');
 	        event.preventDefault();
 	        render.isDragging = false;
+	        render.btnListeners.forEach(listener => listener(0));
 	        render.draw(render.w / 2, render.h / 2, false);
 	    }, false);
+
+	    canvas.addEventListener('mouseout', function(event) {
+	    	render.isDragging = false;
+            render.btnListeners.forEach(listener => listener(0));
+	    	render.draw(render.w / 2, render.h / 2, false);
+	    });
 	}
 
 	addButtonListener(listener) {
@@ -318,14 +337,8 @@ class SpeedControllerRender {
 	}
 
 	onWhichButton(x, y, x0, y0) {
-		const dy = y - y0;
-		// console.log(dy);
-		if (dy < -40) {
-			return 1;
-		} else if (dy > 40) {
-			return 0;
-		}
-		return -1;
+		const dy = y0 - y;
+		return dy / (y0 - 40);
 	}
 
 	draw(x, y, dragging) {
