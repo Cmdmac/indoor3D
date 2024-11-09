@@ -30,7 +30,7 @@ function onBodyLoad() {
             switch(o.code) {
             case DIRECTION:
                 const direction = o.data;
-                let ang = 360 - (direction + 80);
+                let ang = 360 - (direction + 90);
                 console.log("ang=" + ang);
                 map.updateDirection(ang);
                 map.refresh();
