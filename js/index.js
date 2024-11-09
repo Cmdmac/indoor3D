@@ -25,12 +25,14 @@ function onBodyLoad() {
         });
 
         socket.addEventListener('message', (event) => {
-            console.log(`收到消息: ${event.data}`);
+            // console.log(`收到消息: ${event.data}`);
             let o = JSON.parse(event.data);
             switch(o.code) {
             case DIRECTION:
                 const direction = o.data;
-                map.updateDirection(direction);
+                let ang = 360 - (direction + 80);
+                console.log("ang=" + ang);
+                map.updateDirection(ang);
                 map.refresh();
                 break;
             case POSITION:

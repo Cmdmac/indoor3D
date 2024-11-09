@@ -59,20 +59,20 @@ class DirectionControllerRender {
 
 	    let downTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
-	            console.log('touchstart');
-	             event.preventDefault();
-	             render.isDragging = true;
-	             let touch = event.touches[0];
-	             render.currentX = touch.offsetX;
-	             render.curretnY = touch.offsetY;
-	             // console.log(render.offsetX + "," + render.offsetY);
+            console.log('touchstart');
+            event.preventDefault();
+            render.isDragging = true;
+            let touch = event.touches[0];
+	        render.currentX = touch.clientX;
+	        render.currentY = touch.clientY - 70;
+             // console.log(render.offsetX + "," + render.offsetY);
 
 	    };
     	let moveTouchHandler = function (event) {
 	            // this.style.backgroundColor = 'red';
 	    	let touch = event.touches[0];
-	        render.currentX = touch.offsetX;
-	        render.curretnY = touch.offsetY;
+	        render.currentX = touch.clientX;
+	        render.currentY = touch.clientY - 70;
             event.preventDefault();
 
             // 示例：圆心(0, 0)，半径 5，起始角度 0，终止角度 Math.PI / 2
@@ -269,8 +269,8 @@ class SpeedControllerRender {
 	             event.preventDefault();
 	             render.isDragging = true;
 	             let touch = event.touches[0];
-	             render.currentX = touch.offsetX;
-	             render.curretnY = touch.offsetY;
+	             render.currentX = touch.clientX;
+	             render.curretnY = touch.clientY - 70;
 	             // console.log(render.offsetX + "," + render.offsetY);
 
 	    }, false);
@@ -297,8 +297,8 @@ class SpeedControllerRender {
 	    canvas.addEventListener('touchmove', function (event) {
 	            // this.style.backgroundColor = 'red';
 	    	let touch = event.touches[0];
-            render.currentX = touch.offsetX;
-            render.currentY = touch.offsetY;
+            render.currentX = touch.clientX;
+            render.currentY = touch.clientY - 70;
             if (render.currentY < 40) {
             	render.currentY = 40;
             } else if (render.currentY > render.h - 40) {
