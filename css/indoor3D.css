@@ -194,12 +194,27 @@ html body {
         right: 0px;
         flex-direction: column;
         align-items: center;
+        margin-right: 80px;
+    }
+
+    .car-control-panel-right div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+    }
+
+    .car-control-panel-right div img {
+        width: 35px;
+        height: 35px;
     }
 
     .car-control-panel-right canvas {
         position: absolute;
         left: 0px;
-        width: 240px;
+/*        width: 240px;*/
         height: 240px;
     }
 

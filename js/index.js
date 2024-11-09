@@ -198,7 +198,13 @@ function initController() {
     });
     speedControllerRender = new SpeedControllerRender(speedCanvas);
     speedControllerRender.addButtonListener(function(button) {
+        
+        if (Math.abs(this.lastState - button) < 0.1) {
+            return;
+        }
         console.log(button);
+        this.lastState = button;
+        window.socket.send(JSON.stringify({command: 101, data: button}));
     });
 }
 
