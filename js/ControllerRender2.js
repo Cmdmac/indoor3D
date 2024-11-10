@@ -1,5 +1,5 @@
 
-class DirectionControllerRender {
+class DirectionControllerRender2 {
 
 	constructor(canvas) {
 		// console.log(document.getElementById('streamParent').getBoundingClientRect())
@@ -154,7 +154,7 @@ class DirectionControllerRender {
 	}
 }
 
-class SpeedControllerRender {
+class SpeedControllerRender2 {
 	constructor(canvas) {
 		this.ctx = canvas.getContext('2d');
     	this.w = canvas.width;

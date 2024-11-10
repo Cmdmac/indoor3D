@@ -169,36 +169,22 @@ speedControllerRender = undefined;
 function initController() {
     const directionCanvas = document.getElementById('car-controller-direction');
     const speedCanvas = document.getElementById('car-controller-right');
-    directionControllerRender = new DirectionControllerRender(directionCanvas);
+    directionControllerRender = new DirectionControllerRender2(directionCanvas);
     directionControllerRender.addButtonListener(function(button) {
         if (this.lastState === button) {
             return;
         }
-        this.lastState = button;
-        
-        console.log(button);
-        let cmd = {command: -1};
-        switch(button) {
-        case 2:
-            cmd.command = 2;
-            window.socket.send(JSON.stringify(cmd));
-            break;
-        case 6:
-            cmd.command = 1;
-            window.socket.send(JSON.stringify(cmd));
-            break;
-        case 8:
-            cmd.command = 4;
-            window.socket.send(JSON.stringify(cmd));
-            break;
-        case 4:
-            cmd.command = 3;
-            window.socket.send(JSON.stringify(cmd));
-            break;
+        if (Math.abs(this.lastState - button) < 0.1) {
+            return;
         }
+        this.lastState = button;
+
+        console.log(button);
+        this.lastState = button;
+        window.socket.send(JSON.stringify({command: 102, data: button}));
 
     });
-    speedControllerRender = new SpeedControllerRender(speedCanvas);
+    speedControllerRender = new SpeedControllerRender2(speedCanvas);
     speedControllerRender.addButtonListener(function(button) {
         
         if (Math.abs(this.lastState - button) < 0.1) {
