@@ -45,6 +45,7 @@ class DirectionControllerRender2 {
     	let upMouseHandler = function(event) {
 	        event.preventDefault();
 	        render.isDragging = false;
+            render.btnListeners.forEach(listener => listener(0));
 	        render.draw(render.w / 2, render.h / 2, false);
     	};
     	canvas.addEventListener('mousedown', downMouseHandler, false);
@@ -61,6 +62,7 @@ class DirectionControllerRender2 {
 	    canvas.addEventListener('mouseout', function(event) {
 	    	event.preventDefault();
 	        render.isDragging = false;
+            render.btnListeners.forEach(listener => listener(0));
 	        render.draw(render.w / 2, render.h / 2, false);
 	    })
 
