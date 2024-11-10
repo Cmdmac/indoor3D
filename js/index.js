@@ -1,6 +1,7 @@
-
-const DIRECTION = 100;
-const POSITION = 101;
+const CMD_REPORT_LOCATION = 100;
+const CMD_REPORT_DIRECTION = 101;
+const CMD_SET_SPEED = 102;
+const CMD_SET_DIRECTION = 103;
 
 var map = undefined;
 function onBodyLoad() {
@@ -28,15 +29,16 @@ function onBodyLoad() {
             // console.log(`收到消息: ${event.data}`);
             let o = JSON.parse(event.data);
             switch(o.code) {
-            case DIRECTION:
+            case CMD_REPORT_DIRECTION:
                 const direction = o.data;
                 let ang = 360 - (direction + 90);
                 // console.log("ang=" + ang);
                 map.updateDirection(ang);
                 map.refresh();
                 break;
-            case POSITION:
-                const location = o.data;            
+            case CMD_REPORT_LOCATION:
+                const location = o.data;
+                // console.log("location=" + location);            
                 map.updateCurrentLocation(location);
                 map.refresh();
                 break;
@@ -181,7 +183,7 @@ function initController() {
 
         console.log(button);
         this.lastState = button;
-        window.socket.send(JSON.stringify({command: 102, data: button}));
+        window.socket.send(JSON.stringify({command: CMD_SET_DIRECTION, data: button}));
 
     });
     speedControllerRender = new SpeedControllerRender2(speedCanvas);
@@ -192,7 +194,7 @@ function initController() {
         }
         console.log(button);
         this.lastState = button;
-        window.socket.send(JSON.stringify({command: 101, data: button}));
+        window.socket.send(JSON.stringify({command: CMD_SET_SPEED, data: button}));
     });
 }
 
