@@ -169,11 +169,12 @@ html body {
 
 @media screen and (min-width: 600px) {
     .car-control-panel-left {
-        display: block;
+        display: flex;
         position: absolute;
         left: 0px;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
 /*        background-image: url('../img/circle.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -185,7 +186,7 @@ html body {
         position: absolute;
         left: 0px;
         width: 240px;
-        height: 240px;
+        height: 80px;
     }
 
     .car-control-panel-right {

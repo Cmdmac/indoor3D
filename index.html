@@ -15,7 +15,7 @@
     <script src="js/IndoorMap2dEx.js"></script>
     <!-- <script src="js/IndoorMap3d.js"></script> -->
     <script src="js/Theme.js"></script>
-    <script src="js/ControllerRender.js"></script>
+    <script src="js/ControllerRender2.js"></script>
     <script src="js/index.js"></script>
     <link href="css/indoor3D.css" rel="stylesheet">
 </head>
@@ -48,22 +48,13 @@
                 <img id="play" src="img/play.png" style="width: 30px; height: 30px; ">
                 <label id="stream_loading_state" style="display: none;" >loading...</label>
                 <div id="car-control-panel-left" class="car-control-panel-left" >
-                    <canvas id="car-controller-direction" width="240px" height="240px"></canvas>
+                    
                     <div class="control-panel-row">
-                        <div></div>
-                        <div><img id="upImg" src="img/up.png" style="display: none"/></div>
-                        <div></div>
-                    </div>
-                    <div class="control-panel-row">
-                        <div></div>
+                        <div><img src="img/left.png"/></div>
                         <div><img id="circle" src="img/circle.png" style="visibility: hidden;" /></div>          
-                        <div></div>
+                        <div><img src="img/right.png"/></div>
                     </div>
-                    <div class="control-panel-row">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
+                    <canvas id="car-controller-direction" width="240px" height=80px"></canvas>
                 </div>
                 <div id="car-control-panel-right" class="car-control-panel-right" >
                     <canvas id="car-controller-right" width="80px" height="240px"></canvas>
